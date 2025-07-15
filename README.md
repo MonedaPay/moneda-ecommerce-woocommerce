@@ -27,8 +27,6 @@ A cryptocurrency payment gateway plugin for WooCommerce that integrates with the
 - ✅ Webhook handler for payment status updates
 - ✅ REST API endpoints for order information and status updates
 
-### In Development
-- 🚧 Transaction monitoring and error handling enhancements
 
 ## Requirements
 
