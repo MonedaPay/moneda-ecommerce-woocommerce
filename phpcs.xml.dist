@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards for MonedaPay">
+	<config name="installed_paths" value="vendor/phpcompatibility/php-compatibility,vendor/wp-coding-standards/wpcs,vendor/phpcsstandards/phpcsutils,vendor/phpcsstandards/phpcsextra" />
+	<config name="testVersion" value="7.2-" />
+	<config name="text_domain" value="monedapay-payment-gateway" />
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>tests/*</exclude-pattern>
+	<arg name="extensions" value="php" />
+
+	<file>.</file>
+
+	<arg value="sp" />
+
+	<rule ref="PHPCompatibility">
+		<exclude name="Generic.Functions.CallTimePassByReference" />
+	</rule>
+	<rule ref="WordPress" />
+
+	<rule ref="WordPress-Extra">
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+		<exclude name="Generic.Commenting.DocComment.MissingShort" />
+		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
+		<exclude name="Squiz.Commenting.FunctionComment.EmptyThrows" />
+		<exclude name="Squiz.Commenting.FunctionCommentThrowTag.WrongNumber" />
+		<exclude name="Squiz.Commenting.ClassComment.Missing" />
+		<exclude name="Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure" />
+		<exclude name="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
+		<exclude name="WordPress.CodeAnalysis.AssignmentInCondition.Found" />
+		<exclude name="WordPress.Files.FileName" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode" />
+		<exclude name="WordPress.PHP.YodaConditions" />
+		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict" />
+		<exclude name="WordPress.WP.AlternativeFunctions" />
+		<exclude name="WordPress.WP.CronInterval.ChangeDetected" />
+		<exclude name="WordPress.WhiteSpace.OperatorSpacing.NoSpaceBefore" />
+		<exclude name="WordPress.WhiteSpace.OperatorSpacing.NoSpaceAfter" />
+	</rule>
+	<rule ref="Universal">
+		<exclude name="Generic.CodeAnalysis.AssignmentInCondition.Found" />
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
+		<exclude name="Universal.Classes.RequireFinalClass.NonFinalClassFound" />
+		<exclude name="Universal.ControlStructures.DisallowAlternativeSyntax.FoundForeachWithInlineHTML" />
+		<exclude name="Universal.ControlStructures.DisallowAlternativeSyntax.FoundIfWithInlineHTML" />
+		<exclude name="Universal.ControlStructures.IfElseDeclaration.NoNewLine" />
+		<exclude name="Universal.Namespaces.EnforceCurlyBraceSyntax.Forbidden" />
+		<exclude name="Universal.Operators.DisallowShortTernary.Found" />
+		<exclude name="Universal.Operators.DisallowStandalonePostIncrementDecrement.PostDecrementFound" />
+		<exclude name="Universal.Operators.DisallowStandalonePostIncrementDecrement.PostIncrementFound" />
+		<exclude name="Universal.UseStatements.DisallowUseClass.FoundWithoutAlias" />
+		<exclude name="Universal.UseStatements.DisallowUseClass.FromSameNamespace" />
+		<exclude name="Universal.UseStatements.DisallowUseClass.FromGlobalNamespace" />
+		<exclude name="Universal.UseStatements.DisallowUseClass.FoundWithAlias" />
+	</rule>
+
+	<rule ref="Squiz.Commenting.FileComment.Missing">
+		<exclude-pattern>./app</exclude-pattern>
+		<exclude-pattern>./config</exclude-pattern>
+		<exclude-pattern>./resources</exclude-pattern>
+	</rule>
+	<rule ref="Squiz.Commenting.FunctionComment">
+		<properties>
+			<property name="skipIfInheritdoc" value="true" />
+		</properties>
+	</rule>
+	<rule ref="Generic.Commenting.DocComment.SpacingBeforeTags">
+		<properties>
+			<property name="skipIfInheritdoc" value="true" />
+		</properties>
+	</rule>
+</ruleset>

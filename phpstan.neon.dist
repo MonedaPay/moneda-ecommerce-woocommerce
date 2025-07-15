@@ -1,0 +1,18 @@
+includes:
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+    level: 8
+    bootstrapFiles:
+    	- vendor/autoload.php
+    	- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+    	- stubs/woocommerce-blocks.php
+    	- stubs/monedapay-lib.php
+    	- monedapay-payment-gateway.php
+    scanDirectories:
+       - ./includes
+       - ./vendor
+    paths:
+        - ./includes
+    phpVersion: 80200
+    treatPhpDocTypesAsCertain: false

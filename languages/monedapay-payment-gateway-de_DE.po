@@ -1,0 +1,205 @@
+# Copyright (C) 2023 MonedaPay
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: MonedaPay Payment Gateway 1.0.0\n"
+"Report-Msgid-Bugs-To: https://monedapay.com\n"
+"POT-Creation-Date: 2023-06-01 12:00:00+00:00\n"
+"PO-Revision-Date: 2023-06-01 12:00:00+00:00\n"
+"Last-Translator: \n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: WP-CLI\n"
+
+#: includes/Gateway.php:67
+msgid "MonedaPay"
+msgstr "MonedaPay"
+
+#: includes/Gateway.php:68
+msgid "Accept cryptocurrency payments through MonedaPay payment gateway."
+msgstr "Akzeptieren Sie Kryptowährungszahlungen über das MonedaPay-Zahlungsgateway."
+
+#: includes/Gateway.php:99
+msgid "Enable/Disable"
+msgstr "Aktivieren/Deaktivieren"
+
+#: includes/Gateway.php:101
+msgid "Enable MonedaPay Payment Gateway"
+msgstr "MonedaPay-Zahlungsgateway aktivieren"
+
+#: includes/Gateway.php:105
+msgid "Title"
+msgstr "Titel"
+
+#: includes/Gateway.php:107
+msgid "Payment method title that customers will see during checkout."
+msgstr "Titel der Zahlungsmethode, den Kunden während des Checkouts sehen werden."
+
+#: includes/Gateway.php:108
+msgid "Cryptocurrency Payment"
+msgstr "Kryptowährungszahlung"
+
+#: includes/Gateway.php:112
+msgid "Description"
+msgstr "Beschreibung"
+
+#: includes/Gateway.php:114
+msgid "Payment method description that customers will see during checkout."
+msgstr "Beschreibung der Zahlungsmethode, die Kunden während des Checkouts sehen werden."
+
+#: includes/Gateway.php:115
+msgid "Pay securely with cryptocurrency through MonedaPay."
+msgstr "Zahlen Sie sicher mit Kryptowährung über MonedaPay."
+
+#: includes/Gateway.php:119
+msgid "Environment"
+msgstr "Umgebung"
+
+#: includes/Gateway.php:121
+msgid "Select the MonedaPay environment to use."
+msgstr "Wählen Sie die zu verwendende MonedaPay-Umgebung aus."
+
+#: includes/Gateway.php:127
+msgid "MonedaPay Configuration"
+msgstr "MonedaPay-Konfiguration"
+
+#: includes/Gateway.php:131
+msgid "Enter your MonedaPay merchant configuration for the %s environment."
+msgstr "Geben Sie Ihre MonedaPay-Händlerkonfiguration für die %s-Umgebung ein."
+
+#: includes/Gateway.php:139
+msgid "Merchant ID"
+msgstr "Händler-ID"
+
+#: includes/Gateway.php:141
+msgid "Your MonedaPay Merchant ID (UUID format). Get this from your MonedaPay account dashboard."
+msgstr "Ihre MonedaPay-Händler-ID (UUID-Format). Erhalten Sie diese aus Ihrem MonedaPay-Kontodashboard."
+
+#: includes/Gateway.php:147
+msgid "Shop ID"
+msgstr "Shop-ID"
+
+#: includes/Gateway.php:149
+msgid "Your MonedaPay Shop ID (UUID format). Get this from your MonedaPay account dashboard."
+msgstr "Ihre MonedaPay-Shop-ID (UUID-Format). Erhalten Sie diese aus Ihrem MonedaPay-Kontodashboard."
+
+#: includes/Gateway.php:155
+msgid "Encryption Key"
+msgstr "Verschlüsselungsschlüssel"
+
+#: includes/Gateway.php:157
+msgid "Your MonedaPay Encryption Key. Keep this secure and never share it."
+msgstr "Ihr MonedaPay-Verschlüsselungsschlüssel. Halten Sie diesen sicher und teilen Sie ihn niemals."
+
+#: includes/Gateway.php:163
+msgid "API Security"
+msgstr "API-Sicherheit"
+
+#: includes/Gateway.php:165
+msgid "Configure security settings for the REST API endpoints."
+msgstr "Konfigurieren Sie Sicherheitseinstellungen für die REST-API-Endpunkte."
+
+#: includes/Gateway.php:168
+msgid "Debug Log"
+msgstr "Debug-Protokoll"
+
+#: includes/Gateway.php:170
+msgid "Enable logging"
+msgstr "Protokollierung aktivieren"
+
+#: includes/Gateway.php:174
+msgid "Log MonedaPay events inside %1$s. You can view logs in %2$s."
+msgstr "Protokollieren Sie MonedaPay-Ereignisse in %1$s. Sie können Protokolle in %2$s anzeigen."
+
+#: includes/Gateway.php:176
+msgid "WooCommerce > Status > Logs"
+msgstr "WooCommerce > Status > Protokolle"
+
+#: includes/Gateway.php:232
+msgid "Order not found."
+msgstr "Bestellung nicht gefunden."
+
+#: includes/Gateway.php:242
+msgid "Could not generate payment link. Please try again or contact support."
+msgstr "Zahlungslink konnte nicht generiert werden. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support."
+
+#: includes/Gateway.php:247
+msgid "Awaiting MonedaPay payment"
+msgstr "Warten auf MonedaPay-Zahlung"
+
+#: includes/Gateway.php:306
+msgid "Merchant ID is required when the gateway is enabled."
+msgstr "Händler-ID ist erforderlich, wenn das Gateway aktiviert ist."
+
+#: includes/Gateway.php:308
+msgid "Merchant ID must be a valid UUID format."
+msgstr "Händler-ID muss ein gültiges UUID-Format haben."
+
+#: includes/Gateway.php:312
+msgid "Shop ID is required when the gateway is enabled."
+msgstr "Shop-ID ist erforderlich, wenn das Gateway aktiviert ist."
+
+#: includes/Gateway.php:314
+msgid "Shop ID must be a valid UUID format."
+msgstr "Shop-ID muss ein gültiges UUID-Format haben."
+
+#: includes/Gateway.php:318
+msgid "Encryption Key is required when the gateway is enabled."
+msgstr "Verschlüsselungsschlüssel ist erforderlich, wenn das Gateway aktiviert ist."
+
+#: includes/Gateway.php:320
+msgid "Encryption Key must be 24 characters long and contain only alphanumeric characters."
+msgstr "Der Verschlüsselungsschlüssel muss 24 Zeichen lang sein und darf nur alphanumerische Zeichen enthalten."
+
+#: includes/Gateway.php:327
+msgid "API Auth Header Name is required when the gateway is enabled."
+msgstr "API-Auth-Header-Name ist erforderlich, wenn das Gateway aktiviert ist."
+
+#: includes/Gateway.php:331
+msgid "API Auth Header Value is required when the gateway is enabled."
+msgstr "API-Auth-Header-Wert ist erforderlich, wenn das Gateway aktiviert ist."
+
+#: includes/Init.php:120
+msgid "%s requires WooCommerce to be installed and active."
+msgstr "%s erfordert, dass WooCommerce installiert und aktiv ist."
+
+#: includes/Init.php:134
+msgid "MonedaPay Payment Gateway requires PHP 7.2.5 or higher."
+msgstr "MonedaPay-Zahlungsgateway erfordert PHP 7.2.5 oder höher."
+
+#: includes/Init.php:135
+#: includes/Init.php:143
+msgid "Plugin Activation Error"
+msgstr "Plugin-Aktivierungsfehler"
+
+#: includes/Init.php:142
+msgid "MonedaPay Payment Gateway requires WordPress 6.0 or higher."
+msgstr "MonedaPay-Zahlungsgateway erfordert WordPress 6.0 oder höher."
+
+#: includes/MonedaPayEnvEnum.php:16
+msgid "Staging (Testing)"
+msgstr "Staging (Testen)"
+
+#: includes/MonedaPayEnvEnum.php:17
+msgid "Production (Live)"
+msgstr "Produktion (Live)"
+
+#: includes/REST/OrderUpdateStatusHandler.php:179
+msgid "Payment completed via MonedaPay webhook"
+msgstr "Zahlung über MonedaPay-Webhook abgeschlossen"
+
+#: includes/REST/OrderUpdateStatusHandler.php:186
+msgid "Payment pending via MonedaPay"
+msgstr "Zahlung über MonedaPay ausstehend"
+
+#: includes/REST/OrderUpdateStatusHandler.php:192
+msgid "Payment failed or cancelled via MonedaPay"
+msgstr "Zahlung über MonedaPay fehlgeschlagen oder abgebrochen"
+
+#: includes/REST/OrderUpdateStatusHandler.php:199
+msgid "Received unknown payment status: %s"
+msgstr "Unbekannter Zahlungsstatus erhalten: %s"

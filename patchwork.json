@@ -1,0 +1,9 @@
+{
+    "redefinable-internals": [
+        "dirname", 
+        "function_exists", 
+        "defined", 
+        "in_array",
+        "version_compare"
+    ]
+}
