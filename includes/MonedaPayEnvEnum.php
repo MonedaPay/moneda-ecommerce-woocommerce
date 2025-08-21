@@ -8,6 +8,7 @@ enum MonedaPayEnvEnum: string {
 
 	case PRODUCTION = 'production';
 	case SANDBOX    = 'staging';
+    case DEVELOPMENT = 'dev';
 
 	/**
 	 * Get available environments
@@ -16,13 +17,15 @@ enum MonedaPayEnvEnum: string {
 	 */
 	public static function getEnvs(): array {
 		return [
-			self::SANDBOX->value    => __( 'Staging (Testing)', 'monedapay-payment-gateway' ),
-			self::PRODUCTION->value => __( 'Production (Live)', 'monedapay-payment-gateway' ),
+            self::DEVELOPMENT->value => __( 'Development', 'monedapay-payment-gateway' ),
+			self::SANDBOX->value     => __( 'Staging (Testing)', 'monedapay-payment-gateway' ),
+			self::PRODUCTION->value  => __( 'Production (Live)', 'monedapay-payment-gateway' ),
 		];
 	}
 	public static function mapToApiEnv( ?string $env ): Environment {
 		return match ( $env ) {
 			self::PRODUCTION->value => Environment::PRODUCTION,
+            self::DEVELOPMENT->value => Environment::DEV,
 			default => Environment::STAGING,
 		};
 	}
