@@ -144,7 +144,7 @@ class OrderInfoHandler extends AbstractRestEndpoint {
                     return;
                 }
 
-                if ( ! empty( $order->get_meta( Client::HMAC_REQUEST_KEY, true ) ) ) {
+                if ( empty( $order->get_meta( Client::HMAC_REQUEST_KEY, true ) ) ) {
                     return;
                 }
 
