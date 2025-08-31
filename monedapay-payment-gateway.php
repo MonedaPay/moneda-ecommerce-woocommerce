@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'MONEDAPAY_PLUGIN_FILE', __FILE__ );
 define( 'MONEDAPAY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'MONEDAPAY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'MONEDAPAY_VERSION', '1.0.1' );
+define( 'MONEDAPAY_VERSION', '1.0.2' );
 
 require_once MONEDAPAY_PLUGIN_DIR . 'vendor/autoload.php';
 
