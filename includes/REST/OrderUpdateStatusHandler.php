@@ -242,7 +242,7 @@ class OrderUpdateStatusHandler extends AbstractRestEndpoint {
             if ( in_array( $aggregated_status, [ AggregatedOrderStatus::SUCCESS, AggregatedOrderStatus::OVERPAID ], true ) ) {
                 $target_url = $order->get_checkout_order_received_url();
                 if ( ! empty( $target_url ) ) {
-                    if ( ! defined( 'REST_REQUEST' ) || true !== REST_REQUEST ) {
+                    if ( ! wp_is_json_request() ) {
                         wp_safe_redirect( $target_url );
                         exit;
                     }
@@ -251,7 +251,7 @@ class OrderUpdateStatusHandler extends AbstractRestEndpoint {
             } else {
                 $view_url = $order->get_view_order_url();
                 if ( ! empty( $view_url ) ) {
-                    if ( ! defined( 'REST_REQUEST' ) || true !== REST_REQUEST ) {
+                    if ( ! wp_is_json_request() ) {
                         wp_safe_redirect( $view_url );
                         exit;
                     }
