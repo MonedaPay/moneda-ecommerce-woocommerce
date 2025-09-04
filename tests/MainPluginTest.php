@@ -30,7 +30,7 @@ class MainPluginTest extends TestCase {
 		}
 
 		// Mock the plugin file path to use real directory
-		$pluginFile    = dirname( __DIR__ ) . '/monedapay-payment-gateway.php';
+		$pluginFile    = dirname(__DIR__).'/moneda-ecommerce-woocommerce.php';
 		$realPluginDir = dirname( $pluginFile ) . '/';
 
 		Monkey\Functions\when( 'plugin_dir_path' )->justReturn( $realPluginDir );
@@ -75,7 +75,7 @@ class MainPluginTest extends TestCase {
 	public function test_plugin_blocks_direct_access(): void {
 		// This test verifies the ABSPATH check works
 		// We can't easily test the exit condition, but we can verify the structure
-		$pluginContent = file_get_contents( dirname( __DIR__ ) . '/monedapay-payment-gateway.php' );
+		$pluginContent = file_get_contents(dirname(__DIR__).'/moneda-ecommerce-woocommerce.php');
 
 		$this->assertStringContainsString( 'if ( !defined( \'ABSPATH\' ) )', $pluginContent );
 		$this->assertStringContainsString( 'exit;', $pluginContent );
