@@ -170,7 +170,7 @@ class OrderUpdateStatusHandler extends AbstractRestEndpoint {
         $logger        = wc_get_logger();
         $debug_enabled = $this->gateway->get_option( 'debug', 'no' );
         if ( 'yes' === $debug_enabled ) {
-            $logger->info( 'MonedaPay webhook received: ' . json_encode( $payload ), [ 'source' => 'monedapay' ] );
+            $logger->info( 'Ari10 Pay webhook received: ' . json_encode( $payload ), [ 'source' => 'monedapay' ] );
         }
 
         // Get the order.
@@ -209,20 +209,20 @@ class OrderUpdateStatusHandler extends AbstractRestEndpoint {
             case AggregatedOrderStatus::OVERPAID:
                 // Payment completed successfully.
                 $order->payment_complete();
-                $order->add_order_note( __( 'Payment completed via MonedaPay webhook', 'monedapay-payment-gateway' ) );
+                $order->add_order_note( __( 'Payment completed via Ari10 Pay', 'monedapay-payment-gateway' ) );
                 break;
 
             case AggregatedOrderStatus::IN_PROGRESS:
             case AggregatedOrderStatus::CREATED:
             case AggregatedOrderStatus::UNDERPAID:
                 // Payment is pending.
-                $order->update_status( 'on-hold', __( 'Payment pending via MonedaPay', 'monedapay-payment-gateway' ) );
+                $order->update_status( 'on-hold', __( 'Payment pending via Ari10 Pay', 'monedapay-payment-gateway' ) );
                 break;
 
             case AggregatedOrderStatus::CANCELLED:
             case AggregatedOrderStatus::FAILURE:
                 // Payment failed or was cancelled.
-                $order->update_status( 'failed', __( 'Payment failed or cancelled via MonedaPay', 'monedapay-payment-gateway' ) );
+                $order->update_status( 'failed', __( 'Payment failed or cancelled via Ari10 Pay', 'monedapay-payment-gateway' ) );
                 break;
             default:
                 // Unknown status.
@@ -232,34 +232,6 @@ class OrderUpdateStatusHandler extends AbstractRestEndpoint {
                 // translators: placeholder is for retrieved status name.
                 $order->add_order_note( sprintf( __( 'Received unknown payment status: %s', 'monedapay-payment-gateway' ), $status ?? 'null' ) );
                 break;
-        }
-
-        // After updating the order status, attempt to redirect the end user.
-        // For SUCCESS or OVERPAID statuses, redirect to the WooCommerce "Order received" (thank-you) page.
-        // Otherwise, redirect/expose the standard "View order" page.
-        try {
-            $target_url = '';
-            if ( in_array( $aggregated_status, [ AggregatedOrderStatus::SUCCESS, AggregatedOrderStatus::OVERPAID ], true ) ) {
-                $target_url = $order->get_checkout_order_received_url();
-                if ( ! empty( $target_url ) ) {
-                    if ( ! defined( 'REST_REQUEST' ) || true !== REST_REQUEST ) {
-                        wp_safe_redirect( $target_url );
-                        exit;
-                    }
-                    header( 'X-WC-Order-Received: ' . esc_url_raw( $target_url ) );
-                }
-            } else {
-                $view_url = $order->get_view_order_url();
-                if ( ! empty( $view_url ) ) {
-                    if ( ! defined( 'REST_REQUEST' ) || true !== REST_REQUEST ) {
-                        wp_safe_redirect( $view_url );
-                        exit;
-                    }
-                    header( 'X-WC-Order-View: ' . esc_url_raw( $view_url ) );
-                }
-            }
-        } catch ( \Throwable $t ) {
-            // Silently ignore redirect issues to not break webhook processing.
         }
 
         return true;

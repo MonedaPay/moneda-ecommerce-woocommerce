@@ -70,10 +70,10 @@ class Gateway extends WC_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id                 = self::GATEWAY_ID;
-		$this->icon               = MONEDAPAY_PLUGIN_URL . 'assets/images/monedapay-logo.svg';
+		$this->icon               = MONEDAPAY_PLUGIN_URL . 'assets/images/ari-logo-dark.svg';
 		$this->has_fields         = false; // We'll handle payment on our own page.
-		$this->method_title       = __( 'MonedaPay', 'monedapay-payment-gateway' );
-		$this->method_description = __( 'Accept cryptocurrency payments through MonedaPay payment gateway.', 'monedapay-payment-gateway' );
+		$this->method_title       = __( 'Ari10 Pay', 'monedapay-payment-gateway' );
+		$this->method_description = __( 'Pay securely with cryptocurrency through Ari10 Pay.', 'monedapay-payment-gateway' );
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -103,7 +103,7 @@ class Gateway extends WC_Payment_Gateway {
 			'enabled'               => [
 				'title'   => __( 'Enable/Disable', 'monedapay-payment-gateway' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable MonedaPay Payment Gateway', 'monedapay-payment-gateway' ),
+    'label'   => __( 'Enable Ari10 Pay Payment Gateway', 'monedapay-payment-gateway' ),
 				'default' => 'no',
 			],
 			'title'                 => [
@@ -117,23 +117,23 @@ class Gateway extends WC_Payment_Gateway {
 				'title'       => __( 'Description', 'monedapay-payment-gateway' ),
 				'type'        => 'textarea',
 				'description' => __( 'Payment method description that customers will see during checkout.', 'monedapay-payment-gateway' ),
-				'default'     => __( 'Pay securely with cryptocurrency through MonedaPay.', 'monedapay-payment-gateway' ),
+				'default'     => __( 'Pay securely with cryptocurrency through Ari10 Pay.', 'monedapay-payment-gateway' ),
 				'desc_tip'    => true,
 			],
 			'environment'           => [
 				'title'       => __( 'Environment', 'monedapay-payment-gateway' ),
 				'type'        => 'select',
-				'description' => __( 'Select the MonedaPay environment to use.', 'monedapay-payment-gateway' ),
+				'description' => __( 'Select the Ari10 Pay environment to use.', 'monedapay-payment-gateway' ),
 				'default'     => MonedaPayEnvEnum::SANDBOX->value,
 				'desc_tip'    => true,
 				'options'     => MonedaPayEnvEnum::getEnvs(),
 			],
 			'api_credentials_title' => [
-				'title'       => __( 'MonedaPay Configuration', 'monedapay-payment-gateway' ),
+				'title'       => __( 'Ari10 Pay Configuration', 'monedapay-payment-gateway' ),
 				'type'        => 'title',
 				'description' => sprintf(
 					/* translators: %s: Environment name */
-					__( 'Enter your MonedaPay merchant configuration for the %s environment.', 'monedapay-payment-gateway' ),
+     __( 'Enter your Ari10 Pay merchant configuration for the %s environment.', 'monedapay-payment-gateway' ),
 					'<strong id="monedapay-environment-label">' . $this->get_option(
 						'environment',
 						MonedaPayEnvEnum::SANDBOX->value
@@ -144,7 +144,7 @@ class Gateway extends WC_Payment_Gateway {
 			'merchant_id'           => [
 				'title'       => __( 'Merchant ID', 'monedapay-payment-gateway' ),
 				'type'        => 'text',
-				'description' => __( 'Your MonedaPay Merchant ID (UUID format). Get this from your MonedaPay account dashboard.', 'monedapay-payment-gateway' ),
+    'description' => __( 'Your Ari10 Pay Merchant ID (UUID format). Get this from your Ari10 Pay account dashboard.', 'monedapay-payment-gateway' ),
 				'default'     => '',
 				'desc_tip'    => true,
 				'placeholder' => 'e.g., 550e8400-e29b-41d4-a716-446655440000',
@@ -152,7 +152,7 @@ class Gateway extends WC_Payment_Gateway {
 			'shop_id'               => [
 				'title'       => __( 'Shop ID', 'monedapay-payment-gateway' ),
 				'type'        => 'text',
-				'description' => __( 'Your MonedaPay Shop ID (UUID format). Get this from your MonedaPay account dashboard.', 'monedapay-payment-gateway' ),
+    'description' => __( 'Your Ari10 Pay Shop ID (UUID format). Get this from your Ari10 Pay account dashboard.', 'monedapay-payment-gateway' ),
 				'default'     => '',
 				'desc_tip'    => true,
 				'placeholder' => 'e.g., 6ba7b810-9dad-11d1-80b4-00c04fd430c8',
@@ -160,7 +160,7 @@ class Gateway extends WC_Payment_Gateway {
 			'encryption_key'        => [
 				'title'       => __( 'Encryption Key', 'monedapay-payment-gateway' ),
 				'type'        => 'password',
-				'description' => __( 'Your MonedaPay Encryption Key. Keep this secure and never share it.', 'monedapay-payment-gateway' ),
+    'description' => __( 'Your Ari10 Pay Encryption Key. Keep this secure and never share it.', 'monedapay-payment-gateway' ),
 				'default'     => '',
 				'desc_tip'    => true,
 				'placeholder' => 'e.g., GsTvagiquFzVXZAtrBmfORWM',
@@ -172,7 +172,7 @@ class Gateway extends WC_Payment_Gateway {
 				'default'     => 'no',
 				'description' => sprintf(
 					/* translators: %1$s: Log file location, %2$s: WooCommerce logs URL */
-					__( 'Log MonedaPay events inside %1$s. You can view logs in %2$s.', 'monedapay-payment-gateway' ),
+     __( 'Log Ari10 Pay events inside %1$s. You can view logs in %2$s.', 'monedapay-payment-gateway' ),
 					sprintf( '<code>%s</code>', Settings::get_log_directory() ), // @phpstan-ignore-line
 					'<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '" target="_blank">' . __( 'WooCommerce > Status > Logs', 'monedapay-payment-gateway' ) . '</a>'
 				),
@@ -245,7 +245,7 @@ class Gateway extends WC_Payment_Gateway {
 		}
 
 		// Mark as pending (we're awaiting the payment).
-		$order->update_status( 'pending', __( 'Awaiting MonedaPay payment', 'monedapay-payment-gateway' ) );
+		$order->update_status( 'pending', __( 'Awaiting Ari10 Pay payment', 'monedapay-payment-gateway' ) );
 
 		// Return redirect to the payment page.
 		return [
@@ -442,7 +442,7 @@ class Gateway extends WC_Payment_Gateway {
 		CreatePaymentRequestInterface &$request
 	): void {
 		// Generate callback URL for webhook notifications using REST API.
-		$callback_url = rest_url( AbstractRestEndpoint::API_NAMESPACE . '/' . OrderUpdateStatusHandler::ROUTE );
+        $callback_url = $order->get_checkout_order_received_url();
 
 		// Generate cancel URL for user cancellations.
 		$cancel_url = $order->get_cancel_order_url();

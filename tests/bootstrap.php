@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) {
 
 // Define plugin constants
 if ( ! defined( 'MONEDAPAY_PLUGIN_FILE' ) ) {
-	define( 'MONEDAPAY_PLUGIN_FILE', dirname( __DIR__ ) . '/monedapay-payment-gateway.php' );
+	define( 'MONEDAPAY_PLUGIN_FILE', dirname(__DIR__).'/moneda-ecommerce-woocommerce.php');
 }
 
 if ( ! defined( 'MONEDAPAY_PLUGIN_DIR' ) ) {

@@ -152,7 +152,7 @@ class Init {
 		$message = sprintf(
 			/* translators: %s: Plugin name */
 			__( '%s requires WooCommerce to be installed and active.', 'monedapay-payment-gateway' ),
-			'<strong>MonedaPay Payment Gateway</strong>'
+   '<strong>Ari10 Pay Payment Gateway</strong>'
 		);
 
 		printf( '<div class="notice notice-error"><p>%s</p></div>', wp_kses_post( $message ) );
@@ -165,7 +165,7 @@ class Init {
 		if ( version_compare( PHP_VERSION, '7.2.5', '<' ) ) {
 			deactivate_plugins( plugin_basename( MONEDAPAY_PLUGIN_FILE ) );
 			wp_die(
-				esc_html__( 'MonedaPay Payment Gateway requires PHP 7.2.5 or higher.', 'monedapay-payment-gateway' ),
+				esc_html__( 'Ari10Pay Payment Gateway requires PHP 7.2.5 or higher.', 'monedapay-payment-gateway' ),
 				esc_html__( 'Plugin Activation Error', 'monedapay-payment-gateway' ),
 				[ 'back_link' => true ]
 			);
@@ -173,7 +173,7 @@ class Init {
 		if ( version_compare( get_bloginfo( 'version' ), '6.0', '<' ) ) {
 			deactivate_plugins( plugin_basename( MONEDAPAY_PLUGIN_FILE ) );
 			wp_die(
-				esc_html__( 'MonedaPay Payment Gateway requires WordPress 6.0 or higher.', 'monedapay-payment-gateway' ),
+				esc_html__( 'Ari10Pay Payment Gateway requires WordPress 6.0 or higher.', 'monedapay-payment-gateway' ),
 				esc_html__( 'Plugin Activation Error', 'monedapay-payment-gateway' ),
 				[ 'back_link' => true ]
 			);

@@ -40,11 +40,11 @@ const MonedaPayComponent = () => {
 // Register the payment method
 registerPaymentMethod({
 	name: 'monedapay',
-	label: settings.title || __('MonedaPay', 'monedapay-payment-gateway'),
+	label: settings.title || __('Ari10 Pay', 'monedapay-payment-gateway'),
 	content: createElement(MonedaPayComponent),
 	edit: createElement(MonedaPayComponent),
 	canMakePayment: () => true,
-	ariaLabel: settings.title || __('MonedaPay', 'monedapay-payment-gateway'),
+	ariaLabel: settings.title || __('Ari10 Pay', 'monedapay-payment-gateway'),
   supports: {
   }
 });

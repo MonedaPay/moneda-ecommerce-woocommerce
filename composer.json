@@ -1,9 +1,9 @@
 {
     "name": "monedapay/moneda-ecommerce-woocommerce",
-    "description": "MonedaPay Payment Gateway for WooCommerce",
+    "description": "Ari10 Pay Payment Gateway for WooCommerce",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
-   "version": "1.0.2",
+   "version": "1.0.4",
     "authors": [
         {
             "name": "MonedaPay Team",
