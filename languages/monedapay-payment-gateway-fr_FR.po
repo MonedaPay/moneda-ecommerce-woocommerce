@@ -1,11 +1,11 @@
-# Copyright (C) 2023 MonedaPay
+# Copyright (C) 2025 MonedaPay
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: MonedaPay Payment Gateway 1.0.0\n"
+"Project-Id-Version: MonedaPay Payment Gateway 1.0.3\n"
 "Report-Msgid-Bugs-To: https://monedapay.com\n"
-"POT-Creation-Date: 2023-06-01 12:00:00+00:00\n"
-"PO-Revision-Date: 2023-06-01 12:00:00+00:00\n"
+"POT-Creation-Date: 2025-09-04 16:01:00+00:00\n"
+"PO-Revision-Date: 2025-09-04 16:01:00+00:00\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -13,193 +13,212 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: WP-CLI\n"
+"X-Generator: Manual Update\n"
 
-#: includes/Gateway.php:67
-msgid "MonedaPay"
-msgstr "MonedaPay"
+#: includes/Gateway.php:75
+#, fuzzy
+msgid "Ari10 Pay"
+msgstr "Ari10Pay"
 
-#: includes/Gateway.php:68
-msgid "Accept cryptocurrency payments through MonedaPay payment gateway."
-msgstr "Acceptez les paiements en cryptomonnaie via la passerelle de paiement MonedaPay."
-
-#: includes/Gateway.php:99
+#: includes/Gateway.php:104
 msgid "Enable/Disable"
 msgstr "Activer/Désactiver"
 
-#: includes/Gateway.php:101
-msgid "Enable MonedaPay Payment Gateway"
-msgstr "Activer la passerelle de paiement MonedaPay"
+#: includes/Gateway.php:106
+#, fuzzy
+msgid "Enable Ari10 Pay Payment Gateway"
+msgstr "Activer la passerelle de paiement Ari10Pay"
 
-#: includes/Gateway.php:105
+#: includes/Gateway.php:110
 msgid "Title"
 msgstr "Titre"
 
-#: includes/Gateway.php:107
+#: includes/Gateway.php:112
 msgid "Payment method title that customers will see during checkout."
-msgstr "Titre de la méthode de paiement que les clients verront lors du paiement."
+msgstr ""
+"Titre de la méthode de paiement que les clients verront lors du paiement."
 
-#: includes/Gateway.php:108
+#: includes/Gateway.php:113
 msgid "Cryptocurrency Payment"
 msgstr "Paiement en cryptomonnaie"
 
-#: includes/Gateway.php:112
+#: includes/Gateway.php:117
 msgid "Description"
 msgstr "Description"
 
-#: includes/Gateway.php:114
-msgid "Payment method description that customers will see during checkout."
-msgstr "Description de la méthode de paiement que les clients verront lors du paiement."
-
-#: includes/Gateway.php:115
-msgid "Pay securely with cryptocurrency through MonedaPay."
-msgstr "Payez en toute sécurité avec la cryptomonnaie via MonedaPay."
-
 #: includes/Gateway.php:119
+msgid "Payment method description that customers will see during checkout."
+msgstr ""
+"Description de la méthode de paiement que les clients verront lors du "
+"paiement."
+
+#: includes/Gateway.php:76 includes/Gateway.php:120
+msgid "Pay securely with cryptocurrency through Ari10 Pay."
+msgstr "Payez en toute sécurité avec la cryptomonnaie via Ari10 Pay."
+
+#: includes/Gateway.php:124
 msgid "Environment"
 msgstr "Environnement"
 
-#: includes/Gateway.php:121
-msgid "Select the MonedaPay environment to use."
-msgstr "Sélectionnez l'environnement MonedaPay à utiliser."
+#: includes/Gateway.php:126
+#, fuzzy
+msgid "Select the Ari10 Pay environment to use."
+msgstr "Sélectionnez l'environnement Ari10Pay à utiliser."
 
-#: includes/Gateway.php:127
-msgid "MonedaPay Configuration"
-msgstr "Configuration MonedaPay"
+#: includes/Gateway.php:132
+#, fuzzy
+msgid "Ari10 Pay Configuration"
+msgstr "Configuration Ari10Pay"
 
-#: includes/Gateway.php:131
-msgid "Enter your MonedaPay merchant configuration for the %s environment."
-msgstr "Entrez votre configuration de marchand MonedaPay pour l'environnement %s."
+#: includes/Gateway.php:136
+#, fuzzy
+msgid "Enter your Ari10 Pay merchant configuration for the %s environment."
+msgstr ""
+"Entrez votre configuration de marchand Ari10Pay pour l'environnement %s."
 
-#: includes/Gateway.php:139
+#: includes/Gateway.php:145
 msgid "Merchant ID"
 msgstr "ID du marchand"
 
-#: includes/Gateway.php:141
-msgid "Your MonedaPay Merchant ID (UUID format). Get this from your MonedaPay account dashboard."
-msgstr "Votre ID de marchand MonedaPay (format UUID). Obtenez-le depuis le tableau de bord de votre compte MonedaPay."
-
 #: includes/Gateway.php:147
+#, fuzzy
+msgid ""
+"Your Ari10 Pay Merchant ID (UUID format). Get this from your Ari10 Pay "
+"account dashboard."
+msgstr ""
+"Votre ID de marchand Ari10Pay (format UUID). Obtenez-le depuis le tableau de "
+"bord de votre compte Ari10Pay."
+
+#: includes/Gateway.php:153
 msgid "Shop ID"
 msgstr "ID de la boutique"
 
-#: includes/Gateway.php:149
-msgid "Your MonedaPay Shop ID (UUID format). Get this from your MonedaPay account dashboard."
-msgstr "Votre ID de boutique MonedaPay (format UUID). Obtenez-le depuis le tableau de bord de votre compte MonedaPay."
-
 #: includes/Gateway.php:155
+#, fuzzy
+msgid ""
+"Your Ari10 Pay Shop ID (UUID format). Get this from your Ari10 Pay account "
+"dashboard."
+msgstr ""
+"Votre ID de boutique Ari10Pay (format UUID). Obtenez-le depuis le tableau de "
+"bord de votre compte Ari10Pay."
+
+#: includes/Gateway.php:161
 msgid "Encryption Key"
 msgstr "Clé de chiffrement"
 
-#: includes/Gateway.php:157
-msgid "Your MonedaPay Encryption Key. Keep this secure and never share it."
-msgstr "Votre clé de chiffrement MonedaPay. Gardez-la en sécurité et ne la partagez jamais."
-
 #: includes/Gateway.php:163
-msgid "API Security"
-msgstr "Sécurité de l'API"
+#, fuzzy
+msgid "Your Ari10 Pay Encryption Key. Keep this secure and never share it."
+msgstr ""
+"Votre clé de chiffrement Ari10Pay. Gardez-la en sécurité et ne la partagez "
+"jamais."
 
-#: includes/Gateway.php:165
-msgid "Configure security settings for the REST API endpoints."
-msgstr "Configurez les paramètres de sécurité pour les points de terminaison de l'API REST."
-
-#: includes/Gateway.php:168
+#: includes/Gateway.php:169
 msgid "Debug Log"
 msgstr "Journal de débogage"
 
-#: includes/Gateway.php:170
+#: includes/Gateway.php:171
 msgid "Enable logging"
 msgstr "Activer la journalisation"
 
-#: includes/Gateway.php:174
-msgid "Log MonedaPay events inside %1$s. You can view logs in %2$s."
-msgstr "Journalisez les événements MonedaPay dans %1$s. Vous pouvez consulter les journaux dans %2$s."
+#: includes/Gateway.php:175
+#, fuzzy
+msgid "Log Ari10 Pay events inside %1$s. You can view logs in %2$s."
+msgstr ""
+"Journalisez les événements Ari10Pay dans %1$s. Vous pouvez consulter les "
+"journaux dans %2$s."
 
-#: includes/Gateway.php:176
+#: includes/Gateway.php:177
 msgid "WooCommerce > Status > Logs"
 msgstr "WooCommerce > État > Journaux"
 
-#: includes/Gateway.php:232
+#: includes/Gateway.php:233
 msgid "Order not found."
 msgstr "Commande non trouvée."
 
-#: includes/Gateway.php:242
+#: includes/Gateway.php:243
 msgid "Could not generate payment link. Please try again or contact support."
-msgstr "Impossible de générer le lien de paiement. Veuillez réessayer ou contacter le support."
+msgstr ""
+"Impossible de générer le lien de paiement. Veuillez réessayer ou contacter "
+"le support."
 
-#: includes/Gateway.php:247
-msgid "Awaiting MonedaPay payment"
-msgstr "En attente de paiement MonedaPay"
+#: includes/Gateway.php:248
+#, fuzzy
+msgid "Awaiting Ari10 Pay payment"
+msgstr "En attente de paiement Ari10 Pay"
 
-#: includes/Gateway.php:306
+#: includes/Gateway.php:308
 msgid "Merchant ID is required when the gateway is enabled."
 msgstr "L'ID du marchand est requis lorsque la passerelle est activée."
 
-#: includes/Gateway.php:308
+#: includes/Gateway.php:310
 msgid "Merchant ID must be a valid UUID format."
 msgstr "L'ID du marchand doit être au format UUID valide."
 
-#: includes/Gateway.php:312
+#: includes/Gateway.php:314
 msgid "Shop ID is required when the gateway is enabled."
 msgstr "L'ID de la boutique est requis lorsque la passerelle est activée."
 
-#: includes/Gateway.php:314
+#: includes/Gateway.php:316
 msgid "Shop ID must be a valid UUID format."
 msgstr "L'ID de la boutique doit être au format UUID valide."
 
-#: includes/Gateway.php:318
+#: includes/Gateway.php:320
 msgid "Encryption Key is required when the gateway is enabled."
 msgstr "La clé de chiffrement est requise lorsque la passerelle est activée."
 
-#: includes/Gateway.php:320
-msgid "Encryption Key must be 24 characters long and contain only alphanumeric characters."
-msgstr "La clé de chiffrement doit comporter 24 caractères et ne contenir que des caractères alphanumériques."
+#: includes/Gateway.php:322
+msgid ""
+"Encryption Key must be 24 characters long and contain only alphanumeric "
+"characters."
+msgstr ""
+"La clé de chiffrement doit comporter 24 caractères et ne contenir que des "
+"caractères alphanumériques."
 
-#: includes/Gateway.php:327
-msgid "API Auth Header Name is required when the gateway is enabled."
-msgstr "Le nom d'en-tête d'authentification API est requis lorsque la passerelle est activée."
-
-#: includes/Gateway.php:331
-msgid "API Auth Header Value is required when the gateway is enabled."
-msgstr "La valeur d'en-tête d'authentification API est requise lorsque la passerelle est activée."
-
-#: includes/Init.php:120
+#: includes/Init.php:154
 msgid "%s requires WooCommerce to be installed and active."
 msgstr "%s nécessite que WooCommerce soit installé et actif."
 
-#: includes/Init.php:134
-msgid "MonedaPay Payment Gateway requires PHP 7.2.5 or higher."
-msgstr "La passerelle de paiement MonedaPay nécessite PHP 7.2.5 ou supérieur."
+#: includes/Init.php:168
+msgid "Ari10Pay Payment Gateway requires PHP 7.2.5 or higher."
+msgstr "La passerelle de paiement Ari10Pay nécessite PHP 7.2.5 ou supérieur."
 
-#: includes/Init.php:135
-#: includes/Init.php:143
+#: includes/Init.php:169 includes/Init.php:177
 msgid "Plugin Activation Error"
 msgstr "Erreur d'activation du plugin"
 
-#: includes/Init.php:142
-msgid "MonedaPay Payment Gateway requires WordPress 6.0 or higher."
-msgstr "La passerelle de paiement MonedaPay nécessite WordPress 6.0 ou supérieur."
+#: includes/Init.php:176
+msgid "Ari10Pay Payment Gateway requires WordPress 6.0 or higher."
+msgstr ""
+"La passerelle de paiement Ari10Pay nécessite WordPress 6.0 ou supérieur."
 
-#: includes/MonedaPayEnvEnum.php:16
+#: includes/MonedaPayEnvEnum.php:20
+msgid "Development"
+msgstr ""
+
+#: includes/MonedaPayEnvEnum.php:21
 msgid "Staging (Testing)"
 msgstr "Préproduction (Test)"
 
-#: includes/MonedaPayEnvEnum.php:17
+#: includes/MonedaPayEnvEnum.php:22
 msgid "Production (Live)"
 msgstr "Production (En direct)"
 
-#: includes/REST/OrderUpdateStatusHandler.php:179
-msgid "Payment completed via MonedaPay webhook"
-msgstr "Paiement terminé via webhook MonedaPay"
+#: includes/REST/OrderUpdateStatusHandler.php:212
+#, fuzzy
+msgid "Payment completed via Ari10 Pay"
+msgstr "Paiement effectué via Ari10 Pay"
 
-#: includes/REST/OrderUpdateStatusHandler.php:186
-msgid "Payment pending via MonedaPay"
-msgstr "Paiement en attente via MonedaPay"
+#: includes/REST/OrderUpdateStatusHandler.php:219
+#, fuzzy
+msgid "Payment pending via Ari10 Pay"
+msgstr "Paiement en attente via Ari10 Pay"
 
-#: includes/REST/OrderUpdateStatusHandler.php:192
-msgid "Payment failed or cancelled via MonedaPay"
-msgstr "Paiement échoué ou annulé via MonedaPay"
+#: includes/REST/OrderUpdateStatusHandler.php:225
+#, fuzzy
+msgid "Payment failed or cancelled via Ari10 Pay"
+msgstr "Paiement échoué ou annulé via Ari10 Pay"
 
-#: includes/REST/OrderUpdateStatusHandler.php:199
+#: includes/REST/OrderUpdateStatusHandler.php:233
 msgid "Received unknown payment status: %s"
 msgstr "Statut de paiement inconnu reçu : %s"
