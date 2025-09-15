@@ -64,7 +64,7 @@ tags/          # one folder per released version, e.g. 1.0.0, 1.1.0, etc.
 ### 3.1 Install SVN
 - **macOS**: `brew install subversion`
 - **Ubuntu/Debian**: `sudo apt-get install subversion`
-- **Windows**: Install [TortoiseSVN] or use Git for Windows + SVN CLI.
+- **Windows**: Install [TortoiseSVN](https://tortoisesvn.net/) or use Git for Windows + SVN CLI.
 
 ### 3.2 Check out your plugin’s empty SVN repo
 ```bash
