@@ -130,7 +130,7 @@ The plugin uses the official MonedaPay library (`ari10/moneda-pay-lib`):
 - Shared PHP library for ecommerce integrations
 - Common service classes (Client, Encryption)
 - Standardized models and exceptions
-- PSR-4 autoloaded under `MonedaPay\MonedaPayLib\`
+- PSR-4 autoloaded under `MonedaPay\MonedaPay\`
 
 ### REST API
 
