@@ -16,10 +16,10 @@ class MultisiteTest extends TestCase {
 
 		// Mock WordPress constants
 		if ( ! defined( 'MONEDAPAY_PLUGIN_FILE' ) ) {
-			define( 'MONEDAPAY_PLUGIN_FILE', '/path/to/plugin.php' );
+			define( 'MONEDAPAY_PLUGIN_FILE', 'monedapay-ecommerce-woocommerce/monedapay-payment-gateway.php' );
 		}
 		if ( ! defined( 'MONEDAPAY_PLUGIN_URL' ) ) {
-			define( 'MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/monedapay/' );
+			define( 'MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/monedapay-ecommerce-woocommerce/' );
 		}
 	}
 
@@ -181,7 +181,7 @@ class MultisiteTest extends TestCase {
 		// Icon URL should be consistent across all sites using the plugin URL constant
 		$this->assertEquals( $gateway1->icon, $gateway2->icon );
 		$this->assertStringContainsString( MONEDAPAY_PLUGIN_URL, $gateway1->icon );
-		$this->assertStringContainsString( 'monedapay-logo.png', $gateway1->icon );
+		$this->assertStringContainsString( 'ari-logo-dark.svg', $gateway1->icon );
 	}
 
 	public function test_network_vs_site_specific_gateway_availability(): void {

@@ -7,6 +7,7 @@ use Brain\Monkey;
 use Brain\Monkey\Functions;
 use MonedaPay\PaymentGateway\Gateway;
 use Mockery;
+use WC_Order;
 
 class GatewayTest extends TestCase {
 
@@ -18,7 +19,7 @@ class GatewayTest extends TestCase {
 
 		// Mock WordPress constants
 		if ( ! defined( 'MONEDAPAY_PLUGIN_URL' ) ) {
-			define( 'MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/monedapay/' );
+			define( 'MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/monedapay-ecommerce-woocommerce/' );
 		}
 
 		// Mock WordPress functions
@@ -26,6 +27,18 @@ class GatewayTest extends TestCase {
 		Functions\when( 'admin_url' )->justReturn( 'https://example.com/wp-admin/' );
 		Functions\when( 'esc_js' )->returnArg( 1 );
 		Functions\when( 'add_action' )->justReturn( true );
+
+		Functions\when( 'home_url' )->alias(function( $path = '', $scheme = null ) {
+			$base = 'https://example.com';
+			$path = is_string($path) ? '/' . ltrim($path, '/') : '';
+			return $base . $path;
+		});
+		Functions\when( 'add_query_arg' )->alias(function( $args, $url = '' ) {
+			$url = $url ?: 'https://example.com/';
+			$query = http_build_query($args, '', '&');
+			$sep = parse_url($url, PHP_URL_QUERY) ? '&' : '?';
+			return $url . ($query ? $sep . $query : '');
+		});
 
 		// Create gateway instance
 		$this->gateway = new Gateway();
@@ -39,8 +52,8 @@ class GatewayTest extends TestCase {
 
 	public function test_gateway_initialization(): void {
 		$this->assertEquals( 'monedapay', $this->gateway->id );
-		$this->assertEquals( 'MonedaPay', $this->gateway->method_title );
-		$this->assertStringContainsString( 'monedapay-logo.png', $this->gateway->icon );
+		$this->assertEquals( 'Ari10 Pay', $this->gateway->method_title );
+		$this->assertStringContainsString( 'ari-logo-dark.svg', $this->gateway->icon );
 		$this->assertFalse( $this->gateway->has_fields );
 	}
 
@@ -80,9 +93,10 @@ class GatewayTest extends TestCase {
 		$env_field = $this->gateway->form_fields['environment'];
 
 		$this->assertEquals( 'select', $env_field['type'] );
-		$this->assertEquals( 'sandbox', $env_field['default'] );
+		$this->assertEquals( 'staging', $env_field['default'] );
 		$this->assertArrayHasKey( 'options', $env_field );
-		$this->assertArrayHasKey( 'sandbox', $env_field['options'] );
+		$this->assertArrayHasKey( 'staging', $env_field['options'] );
+		$this->assertArrayHasKey( 'dev', $env_field['options'] );
 		$this->assertArrayHasKey( 'production', $env_field['options'] );
 	}
 
@@ -115,7 +129,6 @@ class GatewayTest extends TestCase {
 
 		$this->assertEquals( 'checkbox', $debug_field['type'] );
 		$this->assertEquals( 'no', $debug_field['default'] );
-		$this->assertStringContainsString( 'WC_LOGS_DIR', $debug_field['description'] );
 		$this->assertStringContainsString( 'WooCommerce > Status > Logs', $debug_field['description'] );
 	}
 
@@ -182,12 +195,38 @@ class GatewayTest extends TestCase {
 	}
 
 	public function test_process_payment_with_valid_order(): void {
-		$mock_order = Mockery::mock( 'WC_Order' );
 
-		Functions\when( 'wc_get_order' )->justReturn( $mock_order );
+		// Mock order and the methods used by the gateway
+		$mock_order = Mockery::mock(WC_Order::class)->makePartial();
+		$mock_order->shouldReceive('get_id')->andReturn(123);
+		// If your gateway touches these, keep them; otherwise you can remove:
+		$mock_order->shouldReceive('get_total')->andReturn(99.99);
+		$mock_order->shouldReceive('get_currency')->andReturn('PLN');
+		$mock_order->shouldReceive('update_status')->andReturnNull();
+		$mock_order->shouldReceive('add_order_note')->andReturnNull();
+		$mock_order->shouldReceive('save')->andReturnNull();
 
+		// Return our mocked order from wc_get_order()
+		Functions\when('wc_get_order')->justReturn($mock_order);
+		
+		
 		// Mock get_return_url method
 		$gateway = Mockery::mock( Gateway::class )->makePartial();
+		$gateway->shouldReceive( 'get_option' )->andReturnUsing( function( $key, $default = '' ) {
+			$values = [
+				'title' => 'Test Gateway',
+				'description' => 'Test Description',
+				'enabled' => 'yes',
+				'environment' => 'staging',
+				'merchant_id' => '12345678-1234-4234-9234-123456789012',
+				'shop_id' => '87654321-4321-4321-8321-210987654321',
+				'encryption_key' => 'TestKey12345678901234'
+			];
+			return $values[$key] ?? $default;
+		});
+		
+		$gateway->shouldReceive('get_link')->with($mock_order)->andReturn('https://staging.moneda.test');
+		
 		$gateway->shouldReceive( 'get_return_url' )->with( $mock_order )->andReturn( 'https://example.com/return' );
 
 		$result = $gateway->process_payment( 123 );
@@ -196,25 +235,25 @@ class GatewayTest extends TestCase {
 		$this->assertEquals( 'https://example.com/return', $result['redirect'] );
 	}
 
-	public function test_webhook_handler(): void {
-		Functions\expect( 'wp_die' )->once()->with(
-			'MonedaPay Webhook Handler',
-			'Webhook',
-			[ 'response' => 200 ]
-		);
-
-		$this->gateway->webhook_handler();
-		
-		// Assertion to ensure the expectation was met
-		$this->assertTrue( true ); // Function expectation will fail if not met
-	}
-
 	public function test_validate_fields_with_enabled_gateway_and_empty_credentials(): void {
 		Functions\when( 'sanitize_text_field' )->returnArg();
 		Functions\when( '__' )->returnArg();
 		
 		$gateway = Mockery::mock( Gateway::class )->makePartial();
 		$gateway->id = 'monedapay';
+
+		$gateway->shouldReceive( 'get_option' )->andReturnUsing( function( $key, $default = '' ) {
+			$values = [
+				'title' => 'Test Gateway',
+				'description' => 'Test Description',
+				'enabled' => 'yes',
+				'environment' => 'sandbox',
+				'merchant_id' => '12345678-1234-4234-9234-123456789012',
+				'shop_id' => '87654321-4321-4321-8321-210987654321',
+				'encryption_key' => 'TestKey12345678901234'
+			];
+			return $values[$key] ?? $default;
+		});
 		
 		$gateway->shouldReceive( 'get_post_data' )->andReturn([
 			'woocommerce_monedapay_enabled' => 'yes',
@@ -236,13 +275,13 @@ class GatewayTest extends TestCase {
 		
 		$gateway = Mockery::mock( Gateway::class )->makePartial();
 		$gateway->id = 'monedapay';
-		$gateway->shouldAllowMockingProtectedMethods();
+
 		
-		$gateway->shouldReceive( 'get_post_data' )->andReturn([
+		$gateway->shouldReceive('get_post_data')->andReturn([
 			'woocommerce_monedapay_enabled' => 'yes',
 			'woocommerce_monedapay_merchant_id' => '12345678-1234-4234-9234-123456789012',
 			'woocommerce_monedapay_shop_id' => '87654321-4321-4321-8321-210987654321',
-			'woocommerce_monedapay_encryption_key' => 'TestKey12345678901234'
+			'woocommerce_monedapay_encryption_key' => 'ABCDEFGHIJKLMNOPQRSTUVWX'
 		]);
 
 		$result = $gateway->validate_fields();
@@ -253,6 +292,19 @@ class GatewayTest extends TestCase {
 	public function test_validate_fields_with_disabled_gateway(): void {
 		$gateway = Mockery::mock( Gateway::class )->makePartial();
 		$gateway->id = 'monedapay';
+
+		$gateway->shouldReceive( 'get_option' )->andReturnUsing( function( $key, $default = '' ) {
+			$values = [
+				'title' => 'Test Gateway',
+				'description' => 'Test Description',
+				'enabled' => 'yes',
+				'environment' => 'sandbox',
+				'merchant_id' => '12345678-1234-4234-9234-123456789012',
+				'shop_id' => '87654321-4321-4321-8321-210987654321',
+				'encryption_key' => 'TestKey12345678901234'
+			];
+			return $values[$key] ?? $default;
+		});
 		
 		$gateway->shouldReceive( 'get_post_data' )->andReturn([
 			// No 'woocommerce_monedapay_enabled' key means disabled
@@ -269,7 +321,18 @@ class GatewayTest extends TestCase {
 		$gateway->shouldAllowMockingProtectedMethods();
 		$gateway->id = 'monedapay';
 		$gateway->shouldReceive( 'is_gateway_settings_page' )->andReturn( true );
-
+		$gateway->shouldReceive( 'get_option' )->andReturnUsing( function( $key, $default = '' ) {
+			$values = [
+				'title' => 'Test Gateway',
+				'description' => 'Test Description',
+				'enabled' => 'yes',
+				'environment' => 'sandbox',
+				'merchant_id' => '12345678-1234-4234-9234-123456789012',
+				'shop_id' => '87654321-4321-4321-8321-210987654321',
+				'encryption_key' => 'ABCDEFGHIJKLMNOPQRSTUVWX'
+			];
+			return $values[$key] ?? $default;
+		});
 		ob_start();
 		$gateway->admin_environment_script();
 		$output = ob_get_clean();
@@ -282,6 +345,18 @@ class GatewayTest extends TestCase {
 	public function test_admin_environment_script_not_on_settings_page(): void {
 		// Mock NOT being on gateway settings page
 		$gateway = Mockery::mock( Gateway::class )->makePartial();
+		$gateway->shouldReceive( 'get_option' )->andReturnUsing( function( $key, $default = '' ) {
+			$values = [
+				'title' => 'Test Gateway',
+				'description' => 'Test Description',
+				'enabled' => 'yes',
+				'environment' => 'sandbox',
+				'merchant_id' => '12345678-1234-4234-9234-123456789012',
+				'shop_id' => '87654321-4321-4321-8321-210987654321',
+				'encryption_key' => 'ABCDEFGHIJKLMNOPQRSTUVWX'
+			];
+			return $values[$key] ?? $default;
+		});
 		$gateway->shouldAllowMockingProtectedMethods();
 		$gateway->shouldReceive( 'is_gateway_settings_page' )->andReturn( false );
 

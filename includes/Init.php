@@ -76,7 +76,6 @@ class Init {
 			return;
 		}
 
-		load_plugin_textdomain( 'monedapay-payment-gateway', false, dirname( plugin_basename( MONEDAPAY_PLUGIN_FILE ) ) . '/languages' );
 		$this->init_gateway();
 		$this->init_blocks_integration();
 
@@ -151,7 +150,7 @@ class Init {
 	public function woocommerce_missing_notice(): void {
 		$message = sprintf(
 			/* translators: %s: Plugin name */
-			__( '%s requires WooCommerce to be installed and active.', 'monedapay-payment-gateway' ),
+			__( '%s requires WooCommerce to be installed and active.', 'moneda-ecommerce-woocommerce' ),
    '<strong>Ari10 Pay Payment Gateway</strong>'
 		);
 
@@ -165,16 +164,16 @@ class Init {
 		if ( version_compare( PHP_VERSION, '7.2.5', '<' ) ) {
 			deactivate_plugins( plugin_basename( MONEDAPAY_PLUGIN_FILE ) );
 			wp_die(
-				esc_html__( 'Ari10Pay Payment Gateway requires PHP 7.2.5 or higher.', 'monedapay-payment-gateway' ),
-				esc_html__( 'Plugin Activation Error', 'monedapay-payment-gateway' ),
+				esc_html__( 'Ari10Pay Payment Gateway requires PHP 7.2.5 or higher.', 'moneda-ecommerce-woocommerce' ),
+				esc_html__( 'Plugin Activation Error', 'moneda-ecommerce-woocommerce' ),
 				[ 'back_link' => true ]
 			);
 		}
 		if ( version_compare( get_bloginfo( 'version' ), '6.0', '<' ) ) {
 			deactivate_plugins( plugin_basename( MONEDAPAY_PLUGIN_FILE ) );
 			wp_die(
-				esc_html__( 'Ari10Pay Payment Gateway requires WordPress 6.0 or higher.', 'monedapay-payment-gateway' ),
-				esc_html__( 'Plugin Activation Error', 'monedapay-payment-gateway' ),
+				esc_html__( 'Ari10Pay Payment Gateway requires WordPress 6.0 or higher.', 'moneda-ecommerce-woocommerce' ),
+				esc_html__( 'Plugin Activation Error', 'moneda-ecommerce-woocommerce' ),
 				[ 'back_link' => true ]
 			);
 		}

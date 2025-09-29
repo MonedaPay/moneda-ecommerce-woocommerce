@@ -209,20 +209,20 @@ class OrderUpdateStatusHandler extends AbstractRestEndpoint {
             case AggregatedOrderStatus::OVERPAID:
                 // Payment completed successfully.
                 $order->payment_complete();
-                $order->add_order_note( __( 'Payment completed via Ari10 Pay', 'monedapay-payment-gateway' ) );
+                $order->add_order_note( __( 'Payment completed via Ari10 Pay', 'moneda-ecommerce-woocommerce' ) );
                 break;
 
             case AggregatedOrderStatus::IN_PROGRESS:
             case AggregatedOrderStatus::CREATED:
             case AggregatedOrderStatus::UNDERPAID:
                 // Payment is pending.
-                $order->update_status( 'on-hold', __( 'Payment pending via Ari10 Pay', 'monedapay-payment-gateway' ) );
+                $order->update_status( 'on-hold', __( 'Payment pending via Ari10 Pay', 'moneda-ecommerce-woocommerce' ) );
                 break;
 
             case AggregatedOrderStatus::CANCELLED:
             case AggregatedOrderStatus::FAILURE:
                 // Payment failed or was cancelled.
-                $order->update_status( 'failed', __( 'Payment failed or cancelled via Ari10 Pay', 'monedapay-payment-gateway' ) );
+                $order->update_status( 'failed', __( 'Payment failed or cancelled via Ari10 Pay', 'moneda-ecommerce-woocommerce' ) );
                 break;
             default:
                 // Unknown status.
@@ -230,7 +230,7 @@ class OrderUpdateStatusHandler extends AbstractRestEndpoint {
                     $logger->warning( 'Unknown payment status received: ' . ( $status ?? 'null' ), [ 'source' => 'monedapay' ] );
                 }
                 // translators: placeholder is for retrieved status name.
-                $order->add_order_note( sprintf( __( 'Received unknown payment status: %s', 'monedapay-payment-gateway' ), $status ?? 'null' ) );
+                $order->add_order_note( sprintf( __( 'Received unknown payment status: %s', 'moneda-ecommerce-woocommerce' ), $status ?? 'null' ) );
                 break;
         }
 

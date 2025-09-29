@@ -1,7 +1,8 @@
 {
     "redefinable-internals": [
         "dirname", 
-        "function_exists", 
+        "function_exists",
+        "file_exists",
         "defined", 
         "in_array",
         "version_compare"

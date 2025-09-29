@@ -1,0 +1,234 @@
+# Copyright (C) 2025 MonedaPay
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ari10 Pay Payment Gateway for Woocommerce 1.0.4\n"
+"Report-Msgid-Bugs-To: https://monedapay.com\n"
+"POT-Creation-Date: 2025-09-04 16:01:00+00:00\n"
+"PO-Revision-Date: 2025-09-14 08:15+0000\n"
+"Last-Translator: \n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Loco https://localise.biz/"
+
+#. %s: Plugin name
+#: includes/Init.php:154
+#, php-format
+msgid "%s requires WooCommerce to be installed and active."
+msgstr "%s richiede che WooCommerce sia installato e attivo."
+
+#. Description of the plugin
+msgid "Accept payments through Ari10 Pay payment gateway for WooCommerce."
+msgstr "Accetta pagamenti tramite la passerella Ari10 Pay per WooCommerce."
+
+#: includes/Gateway.php:75
+msgid "Ari10 Pay"
+msgstr "Ari10Pay"
+
+#: includes/Gateway.php:132
+msgid "Ari10 Pay Configuration"
+msgstr "Configurazione Ari10Pay"
+
+#. Name of the plugin
+msgid "Ari10 Pay Payment Gateway for WooCommerce"
+msgstr "Gateway di pagamento Ari10 Pay per WooCommerce"
+
+#: includes/Init.php:168
+msgid "Ari10Pay Payment Gateway requires PHP 7.2.5 or higher."
+msgstr "Il gateway di pagamento Ari10 Pay richiede PHP 7.2.5 o superiore."
+
+#: includes/Init.php:176
+msgid "Ari10Pay Payment Gateway requires WordPress 6.0 or higher."
+msgstr "Il gateway di pagamento Ari10 Pay richiede WordPress 6.0 o superiore."
+
+#: includes/Gateway.php:248
+msgid "Awaiting Ari10 Pay payment"
+msgstr "In attesa del pagamento Ari10 Pay"
+
+#: includes/Gateway.php:243
+msgid "Could not generate payment link. Please try again or contact support."
+msgstr ""
+"Impossibile generare il link di pagamento. Riprova o contatta l'assistenza."
+
+#: includes/Gateway.php:113
+msgid "Cryptocurrency Payment"
+msgstr "Pagamento in criptovaluta"
+
+#: includes/Gateway.php:169
+msgid "Debug Log"
+msgstr "Registro di debug"
+
+#: includes/Gateway.php:117
+msgid "Description"
+msgstr "Descrizione"
+
+#: includes/MonedaPayEnvEnum.php:20
+msgid "Development"
+msgstr "Sviluppo"
+
+#: includes/Gateway.php:106
+msgid "Enable Ari10 Pay Payment Gateway"
+msgstr "Abilita il gateway di pagamento Ari10Pay"
+
+#: includes/Gateway.php:171
+msgid "Enable logging"
+msgstr "Abilita registrazione"
+
+#: includes/Gateway.php:104
+msgid "Enable/Disable"
+msgstr "Abilita/Disabilita"
+
+#: includes/Gateway.php:161
+msgid "Encryption Key"
+msgstr "Chiave di crittografia"
+
+#: includes/Gateway.php:320
+msgid "Encryption Key is required when the gateway is enabled."
+msgstr "La chiave di crittografia è richiesta quando il gateway è abilitato."
+
+#: includes/Gateway.php:322
+msgid ""
+"Encryption Key must be 24 characters long and contain only alphanumeric "
+"characters."
+msgstr ""
+"La chiave di crittografia deve essere lunga 24 caratteri e contenere solo "
+"caratteri alfanumerici."
+
+#. %s: Environment name
+#: includes/Gateway.php:136
+#, php-format
+msgid "Enter your Ari10 Pay merchant configuration for the %s environment."
+msgstr ""
+"Inserisci la configurazione del commerciante Ari10Pay per l'ambiente %s."
+
+#: includes/Gateway.php:124
+msgid "Environment"
+msgstr "Ambiente"
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://monedapay.com"
+msgstr "https://monedapay.com"
+
+#. %1$s: Log file location, %2$s: WooCommerce logs URL
+#: includes/Gateway.php:175
+#, php-format
+msgid "Log Ari10 Pay events inside %1$s. You can view logs in %2$s."
+msgstr ""
+"Registra gli eventi Ari10 Pay all'interno di %1$s. Puoi visualizzare i "
+"registri in %2$s."
+
+#: includes/Gateway.php:145
+msgid "Merchant ID"
+msgstr "ID Commerciante"
+
+#: includes/Gateway.php:308
+msgid "Merchant ID is required when the gateway is enabled."
+msgstr "L'ID Commerciante è richiesto quando il gateway è abilitato."
+
+#: includes/Gateway.php:310
+msgid "Merchant ID must be a valid UUID format."
+msgstr "L'ID Commerciante deve essere in un formato UUID valido."
+
+#. Author of the plugin
+msgid "MonedaPay"
+msgstr "MonedaPay"
+
+#: includes/Gateway.php:233
+msgid "Order not found."
+msgstr "Ordine non trovato."
+
+#: includes/Gateway.php:76 includes/Gateway.php:120
+msgid "Pay securely with cryptocurrency through Ari10 Pay."
+msgstr "Paga in modo sicuro con criptovaluta tramite Ari10 Pay."
+
+#: includes/REST/OrderUpdateStatusHandler.php:212
+msgid "Payment completed via Ari10 Pay"
+msgstr "Pagamento completato tramite webhook Ari10 Pay"
+
+#: includes/REST/OrderUpdateStatusHandler.php:225
+msgid "Payment failed or cancelled via Ari10 Pay"
+msgstr "Pagamento fallito o annullato tramite Ari10 Pay"
+
+#: includes/Gateway.php:119
+msgid "Payment method description that customers will see during checkout."
+msgstr ""
+"Descrizione del metodo di pagamento che i clienti vedranno durante il "
+"checkout."
+
+#: includes/Gateway.php:112
+msgid "Payment method title that customers will see during checkout."
+msgstr ""
+"Titolo del metodo di pagamento che i clienti vedranno durante il checkout."
+
+#: includes/REST/OrderUpdateStatusHandler.php:219
+msgid "Payment pending via Ari10 Pay"
+msgstr "Pagamento in attesa tramite Ari10 Pay"
+
+#: includes/Init.php:169 includes/Init.php:177
+msgid "Plugin Activation Error"
+msgstr "Errore di attivazione del plugin"
+
+#: includes/MonedaPayEnvEnum.php:22
+msgid "Production (Live)"
+msgstr "Produzione (Live)"
+
+#. placeholder is for retrieved status name.
+#: includes/REST/OrderUpdateStatusHandler.php:233
+#, php-format
+msgid "Received unknown payment status: %s"
+msgstr "Ricevuto stato di pagamento sconosciuto: %s"
+
+#: includes/Gateway.php:126
+msgid "Select the Ari10 Pay environment to use."
+msgstr "Seleziona l'ambiente Ari10Pay da utilizzare."
+
+#: includes/Gateway.php:153
+msgid "Shop ID"
+msgstr "ID Negozio"
+
+#: includes/Gateway.php:314
+msgid "Shop ID is required when the gateway is enabled."
+msgstr "L'ID Negozio è richiesto quando il gateway è abilitato."
+
+#: includes/Gateway.php:316
+msgid "Shop ID must be a valid UUID format."
+msgstr "L'ID Negozio deve essere in un formato UUID valido."
+
+#: includes/MonedaPayEnvEnum.php:21
+msgid "Staging (Testing)"
+msgstr "Staging (Test)"
+
+#: includes/Gateway.php:110
+msgid "Title"
+msgstr "Titolo"
+
+#: includes/Gateway.php:177
+msgid "WooCommerce > Status > Logs"
+msgstr "WooCommerce > Stato > Registri"
+
+#: includes/Gateway.php:163
+msgid "Your Ari10 Pay Encryption Key. Keep this secure and never share it."
+msgstr ""
+"La tua chiave di crittografia Ari10 Pay. Mantienila al sicuro e non "
+"condividerla mai."
+
+#: includes/Gateway.php:147
+msgid ""
+"Your Ari10 Pay Merchant ID (UUID format). Get this from your Ari10 Pay "
+"account dashboard."
+msgstr ""
+"Il tuo ID Commerciante Ari10Pay (formato UUID). Ottienilo dalla dashboard "
+"del tuo account Ari10Pay."
+
+#: includes/Gateway.php:155
+msgid ""
+"Your Ari10 Pay Shop ID (UUID format). Get this from your Ari10 Pay account "
+"dashboard."
+msgstr ""
+"Il tuo ID Commerciante Ari10Pay (formato UUID). Ottienilo dalla dashboard "
+"del tuo account Ari10Pay."

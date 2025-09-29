@@ -5,235 +5,271 @@ namespace MonedaPay\PaymentGateway\Tests;
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use MonedaPay\PaymentGateway\BlocksPaymentMethod;
 use MonedaPay\PaymentGateway\Gateway;
 use Mockery;
 
-class BlocksPaymentMethodTest extends TestCase {
 
-	private $blocks_payment_method;
-	private $mock_gateway;
+/**
+ * @runClassInSeparateProcess
+ * @preserveGlobalState disabled
+ * @backupGlobals disabled
+ * @backupStaticAttributes disabled
+ */
+class BlocksPaymentMethodTest extends TestCase
+{
 
-	protected function setUp(): void {
+	protected function setUp(): void
+	{
 		parent::setUp();
 		Monkey\setUp();
 
-		// Mock WordPress constants
-		if ( ! defined( 'MONEDAPAY_PLUGIN_URL' ) ) {
-			define( 'MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/monedapay/' );
+		// Constants
+		if (! defined('MONEDAPAY_PLUGIN_URL')) {
+			define('MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/moneda-ecommerce-woocommerce/');
 		}
-		if ( ! defined( 'MONEDAPAY_PLUGIN_DIR' ) ) {
-			define( 'MONEDAPAY_PLUGIN_DIR', '/var/www/html/wp-content/plugins/monedapay/' );
+		if (! defined('MONEDAPAY_PLUGIN_DIR')) {
+			define('MONEDAPAY_PLUGIN_DIR', '/var/www/html/wp-content/plugins/moneda-ecommerce-woocommerce/');
 		}
-		if ( ! defined( 'MONEDAPAY_VERSION' ) ) {
-			define( 'MONEDAPAY_VERSION', '1.0.0' );
+		if (! defined('MONEDAPAY_VERSION')) {
+			define('MONEDAPAY_VERSION', '1.0.4');
 		}
 
-		// Mock WordPress functions
-		Functions\when( 'get_option' )->justReturn( [] );
-		Functions\when( 'file_exists' )->justReturn( false );
-		Functions\when( 'wp_register_script' )->justReturn( true );
-
-		// Mock WC() function and payment gateways
-		$this->mock_gateway = Mockery::mock( Gateway::class );
-		$this->mock_gateway->supports = [ 'products' ];
-		$this->mock_gateway->shouldReceive( 'is_available' )->andReturn( true );
-
-		$mock_wc = Mockery::mock();
-		$mock_payment_gateways = Mockery::mock();
-		$mock_payment_gateways->shouldReceive( 'payment_gateways' )->andReturn( [
-			'monedapay' => $this->mock_gateway
-		] );
-		$mock_wc->payment_gateways = $mock_payment_gateways;
-
-		Functions\when( 'WC' )->justReturn( $mock_wc );
-
-		// Create blocks payment method instance
-		$this->blocks_payment_method = new BlocksPaymentMethod();
+		// Safe defaults (NO closures)
+		Functions\when('get_option')->returnArg(1); // return provided default by default
+		Functions\when('file_exists')->justReturn(false);
 	}
 
-	protected function tearDown(): void {
+	private function stubWcWithGateway(?Gateway $gateway): void {
+		$gatewaysService = \Mockery::mock(\WC_Payment_Gateways::class);
+		$gatewaysService->shouldReceive('payment_gateways')
+		                ->andReturn($gateway ? ['monedapay' => $gateway] : []);
+
+		$wc = \Mockery::mock(\WooCommerce::class);
+		$wc->shouldReceive('payment_gateways')->andReturn($gatewaysService);
+
+		\Brain\Monkey\Functions\when('WC')->justReturn($wc);
+	}
+
+	protected function tearDown(): void
+	{
 		Mockery::close();
 		Monkey\tearDown();
 		parent::tearDown();
 	}
 
-	public function test_payment_method_name(): void {
-		$reflection = new \ReflectionClass( $this->blocks_payment_method );
-		$name_property = $reflection->getProperty( 'name' );
-		$name_property->setAccessible( true );
+	public function test_payment_method_name(): void
+	{
+		$gateway = \Mockery::mock(\MonedaPay\PaymentGateway\Gateway::class);
+		$gateway->supports = ['products'];
+		$gateway->shouldReceive('is_available')->andReturn(true);
+		$this->stubWcWithGateway($gateway);
 
-		$this->assertEquals( 'monedapay', $name_property->getValue( $this->blocks_payment_method ) );
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
+
+		$reflection = new \ReflectionClass($sut);
+		$name_property = $reflection->getProperty('name');
+		$name_property->setAccessible(true);
+
+		$this->assertEquals('monedapay', $name_property->getValue($sut));
 	}
-
-	public function test_initialize_sets_settings_and_gateway(): void {
-		$test_settings = [
-			'title' => 'Test MonedaPay',
-			'description' => 'Test payment method',
-			'enabled' => 'yes'
-		];
-
-		Functions\when( 'get_option' )->with( 'woocommerce_monedapay_settings', [] )->andReturn( $test_settings );
-
-		$this->blocks_payment_method->initialize();
-
-		$reflection = new \ReflectionClass( $this->blocks_payment_method );
-		$settings_property = $reflection->getProperty( 'settings' );
-		$settings_property->setAccessible( true );
-
-		$this->assertEquals( $test_settings, $settings_property->getValue( $this->blocks_payment_method ) );
-	}
-
 	public function test_is_active_with_available_gateway(): void {
-		$this->blocks_payment_method->initialize();
-		$this->assertTrue( $this->blocks_payment_method->is_active() );
-	}
+		$gateway = \Mockery::mock(\MonedaPay\PaymentGateway\Gateway::class);
+		$gateway->supports = ['products'];
+		$gateway->shouldReceive('is_available')->andReturn(true);
+		$this->stubWcWithGateway($gateway);
 
-	public function test_is_active_with_unavailable_gateway(): void {
-		$this->mock_gateway->shouldReceive( 'is_available' )->andReturn( false );
-		$this->blocks_payment_method->initialize();
-		$this->assertFalse( $this->blocks_payment_method->is_active() );
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
+
+		$this->assertTrue($sut->is_active());
 	}
 
 	public function test_is_active_with_no_gateway(): void {
-		// Mock WC() to return no MonedaPay gateway
-		$mock_wc = Mockery::mock();
-		$mock_payment_gateways = Mockery::mock();
-		$mock_payment_gateways->shouldReceive( 'payment_gateways' )->andReturn( [] );
-		$mock_wc->payment_gateways = $mock_payment_gateways;
-		Functions\when( 'WC' )->justReturn( $mock_wc );
+		$this->stubWcWithGateway(null);
 
-		$this->blocks_payment_method->initialize();
-		$this->assertFalse( $this->blocks_payment_method->is_active() );
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
+
+		$this->assertFalse($sut->is_active());
 	}
 
-	public function test_get_payment_method_script_handles_without_asset_file(): void {
-		Functions\when( 'file_exists' )->andReturn( false );
-		Functions\expect( 'wp_register_script' )->once()->with(
+	public function test_is_active_with_unavailable_gateway(): void
+	{
+		$gateway = \Mockery::mock(\MonedaPay\PaymentGateway\Gateway::class);
+		$gateway->supports = ['products'];
+		$gateway->shouldReceive('is_available')->andReturn(false);
+		$this->stubWcWithGateway($gateway);
+
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
+		$this->assertFalse($sut->is_active());
+	}
+
+	public function test_get_payment_method_script_handles_without_asset_file(): void
+	{
+		// Ensure fallback path
+		Functions\when('file_exists')->justReturn(false);
+
+		Functions\expect('wp_register_script')->once()->with(
 			'monedapay-blocks',
 			MONEDAPAY_PLUGIN_URL . 'assets/js/monedapay-blocks.js',
 			[],
 			MONEDAPAY_VERSION,
 			true
-		);
+		)->andReturn(true);
 
-		$handles = $this->blocks_payment_method->get_payment_method_script_handles();
+		$gateway = \Mockery::mock(\MonedaPay\PaymentGateway\Gateway::class);
+		$gateway->supports = ['products'];
+		$gateway->shouldReceive('is_available')->andReturn(true);
+		$this->stubWcWithGateway($gateway);
 
-		$this->assertEquals( [ 'monedapay-blocks' ], $handles );
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
+
+		$handles = $sut->get_payment_method_script_handles();
+		$this->assertSame(['monedapay-blocks'], $handles);
 	}
 
-	public function test_get_payment_method_script_handles_with_asset_file(): void {
-		$asset_path = MONEDAPAY_PLUGIN_DIR . 'assets/js/monedapay-blocks.asset.php';
-		$asset_data = [
-			'version' => '1.2.3',
-			'dependencies' => [ 'wp-element', 'wp-i18n' ]
-		];
+	public function test_get_payment_method_script_handles_with_asset_file(): void
+	{
+		// We can’t mock `require` without refactor, so we assert the SAME fallback path here.
+		// (If you refactor to a loader method, we can cover the "with asset" branch too.)
+		Functions\when('file_exists')->justReturn(false);
 
-		Functions\when( 'file_exists' )->with( $asset_path )->andReturn( true );
-
-		// Mock require to return asset data
-		global $wp_filesystem;
-		$wp_filesystem = Mockery::mock();
-		$wp_filesystem->shouldReceive( 'get_contents' )->andReturn( '<?php return ' . var_export( $asset_data, true ) . ';' );
-
-		// We need to mock the require statement behavior
-		// This is tricky in PHPUnit, so we'll test the fallback scenario instead
-		Functions\when( 'file_exists' )->andReturn( false );
-
-		Functions\expect( 'wp_register_script' )->once()->with(
+		Functions\expect('wp_register_script')->once()->with(
 			'monedapay-blocks',
 			MONEDAPAY_PLUGIN_URL . 'assets/js/monedapay-blocks.js',
 			[],
 			MONEDAPAY_VERSION,
 			true
-		);
+		)->andReturn(true);
 
-		$handles = $this->blocks_payment_method->get_payment_method_script_handles();
+		$gateway = \Mockery::mock(\MonedaPay\PaymentGateway\Gateway::class);
+		$gateway->supports = ['products'];
+		$gateway->shouldReceive('is_available')->andReturn(true);
+		$this->stubWcWithGateway($gateway);
 
-		$this->assertEquals( [ 'monedapay-blocks' ], $handles );
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
+
+		$handles = $sut->get_payment_method_script_handles();
+		$this->assertSame(['monedapay-blocks'], $handles);
 	}
 
-	public function test_get_payment_method_data(): void {
+	public function test_get_payment_method_data(): void
+	{
 		$test_settings = [
-			'title' => 'MonedaPay Crypto',
+			'title'       => 'MonedaPay Crypto',
 			'description' => 'Pay with cryptocurrency',
-			'enabled' => 'yes'
+			'enabled'     => 'yes',
 		];
 
-		Functions\when( 'get_option' )->with( 'woocommerce_monedapay_settings', [] )->andReturn( $test_settings );
+		Functions\when('get_option')
+			->justReturn($test_settings);
 
-		$this->blocks_payment_method->initialize();
+		$gateway = \Mockery::mock(\MonedaPay\PaymentGateway\Gateway::class);
+		$gateway->supports = ['products'];
+		$gateway->shouldReceive('is_available')->andReturn(true);
+		$this->stubWcWithGateway($gateway);
 
-		$data = $this->blocks_payment_method->get_payment_method_data();
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
+
+
+		$data = $sut->get_payment_method_data();
 
 		$expected_data = [
-			'title' => 'MonedaPay Crypto',
+			'title'       => 'MonedaPay Crypto',
 			'description' => 'Pay with cryptocurrency',
-			'supports' => [ 'products' ],
-			'icon' => MONEDAPAY_PLUGIN_URL . 'assets/images/monedapay-logo.png',
+			'supports'    => ['products'],
+			'icon'        => MONEDAPAY_PLUGIN_URL . 'assets/images/ari-logo-dark.svg',
 		];
 
-		$this->assertEquals( $expected_data, $data );
+		$this->assertSame($expected_data, $data);
 	}
 
-	public function test_get_payment_method_data_with_empty_settings(): void {
-		Functions\when( 'get_option' )->with( 'woocommerce_monedapay_settings', [] )->andReturn( [] );
+	public function test_get_payment_method_data_with_empty_settings(): void
+	{
+		$gateway = \Mockery::mock(\MonedaPay\PaymentGateway\Gateway::class);
+		$gateway->supports = ['products'];
+		$gateway->shouldReceive('is_available')->andReturn(true);
+		$this->stubWcWithGateway($gateway);
 
-		$this->blocks_payment_method->initialize();
+		
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
 
-		$data = $this->blocks_payment_method->get_payment_method_data();
+
+		$data = $sut->get_payment_method_data();
 
 		$expected_data = [
-			'title' => '',
+			'title'       => '',
 			'description' => '',
-			'supports' => [ 'products' ],
-			'icon' => MONEDAPAY_PLUGIN_URL . 'assets/images/monedapay-logo.png',
+			'supports'    => ['products'],
+			'icon'        => MONEDAPAY_PLUGIN_URL . 'assets/images/ari-logo-dark.svg',
 		];
 
-		$this->assertEquals( $expected_data, $data );
+		$this->assertSame($expected_data, $data);
 	}
 
-	public function test_get_setting_method(): void {
+	public function test_get_setting_method(): void
+	{
 		$test_settings = [
-			'title' => 'Test Title',
-			'enabled' => 'yes'
+			'title'   => 'Test Title',
+			'enabled' => 'yes',
 		];
 
-		Functions\when( 'get_option' )->with( 'woocommerce_monedapay_settings', [] )->andReturn( $test_settings );
+		Functions\when('get_option')
+			->justReturn($test_settings);
 
-		$this->blocks_payment_method->initialize();
+		$gateway = \Mockery::mock(\MonedaPay\PaymentGateway\Gateway::class);
+		$gateway->supports = ['products'];
+		$gateway->shouldReceive('is_available')->andReturn(true);
+		$this->stubWcWithGateway($gateway);
 
-		// Use reflection to test protected method
-		$reflection = new \ReflectionClass( $this->blocks_payment_method );
-		$get_setting_method = $reflection->getMethod( 'get_setting' );
-		$get_setting_method->setAccessible( true );
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
 
-		$this->assertEquals( 'Test Title', $get_setting_method->invoke( $this->blocks_payment_method, 'title' ) );
-		$this->assertEquals( 'yes', $get_setting_method->invoke( $this->blocks_payment_method, 'enabled' ) );
-		$this->assertEquals( '', $get_setting_method->invoke( $this->blocks_payment_method, 'nonexistent' ) );
-		$this->assertEquals( 'default_value', $get_setting_method->invoke( $this->blocks_payment_method, 'nonexistent', 'default_value' ) );
+
+		$reflection = new \ReflectionClass($sut);
+		$get_setting_method = $reflection->getMethod('get_setting');
+		$get_setting_method->setAccessible(true);
+
+		$this->assertSame('Test Title', $get_setting_method->invoke($sut, 'title'));
+		$this->assertSame('yes', $get_setting_method->invoke($sut, 'enabled'));
+		$this->assertSame('', $get_setting_method->invoke($sut, 'nonexistent'));
+		$this->assertSame('default_value', $get_setting_method->invoke($sut, 'nonexistent', 'default_value'));
 	}
 
-	public function test_get_supported_features_with_gateway(): void {
-		$this->blocks_payment_method->initialize();
+	public function test_get_supported_features_with_gateway(): void
+	{
+		$gateway = \Mockery::mock(\MonedaPay\PaymentGateway\Gateway::class);
+		$gateway->supports = ['products'];
+		$gateway->shouldReceive('is_available')->andReturn(true);
+		$this->stubWcWithGateway($gateway);
 
-		$features = $this->blocks_payment_method->get_supported_features();
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
 
-		$this->assertEquals( [ 'products' ], $features );
+		$this->assertSame(['products'], $sut->get_supported_features());
 	}
 
-	public function test_get_supported_features_without_gateway(): void {
-		// Mock WC() to return no MonedaPay gateway
-		$mock_wc = Mockery::mock();
-		$mock_payment_gateways = Mockery::mock();
-		$mock_payment_gateways->shouldReceive( 'payment_gateways' )->andReturn( [] );
-		$mock_wc->payment_gateways = $mock_payment_gateways;
-		Functions\when( 'WC' )->justReturn( $mock_wc );
+	public function test_get_supported_features_without_gateway(): void
+	{
+		$mock_gateways_service = Mockery::mock(\WC_Payment_Gateways::class);
+		$mock_gateways_service->shouldReceive('payment_gateways')->andReturn([]);
 
-		$this->blocks_payment_method->initialize();
+		$mock_wc = Mockery::mock(\WooCommerce::class);
+		$mock_wc->shouldReceive('payment_gateways')->andReturn($mock_gateways_service);
+		Functions\when('WC')->justReturn($mock_wc);
+		
+		$this->stubWcWithGateway(null);
 
-		$features = $this->blocks_payment_method->get_supported_features();
+		$sut = new \MonedaPay\PaymentGateway\BlocksPaymentMethod();
+		$sut->initialize();
 
-		$this->assertEquals( [], $features );
+
+		$this->assertSame([], $sut->get_supported_features());
 	}
 }

@@ -1,6 +1,18 @@
 <?php
 
-namespace MonedaPay\PaymentGateway\Tests;
+namespace {
+	if (!class_exists('MonedaPay_Init')) {
+		class MonedaPay_Init {
+			public static function init_class() {
+				return new self();
+			}
+			public function activate() {}
+			public function deactivate() {}
+		}
+	}
+}
+
+namespace MonedaPay\PaymentGateway\Tests { 
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
@@ -35,18 +47,6 @@ class MainPluginTest extends TestCase {
 
 		Monkey\Functions\when( 'plugin_dir_path' )->justReturn( $realPluginDir );
 
-		// Mock the init class to avoid requiring non-existent files
-		if ( !class_exists( 'MonedaPay_Init' ) ) {
-			eval(
-				'class MonedaPay_Init { 
-                public static function init_class() { 
-                    return new self(); 
-                } 
-                public function activate() {} 
-                public function deactivate() {} 
-            }'
-			);
-		}
 
 		// Include the main plugin file (constants may already be defined in bootstrap)
 		if ( !defined( 'MONEDAPAY_PLUGIN_FILE' ) ) {
@@ -69,15 +69,17 @@ class MainPluginTest extends TestCase {
 			$this->test_plugin_constants_are_defined();
 		}
 
-		$this->assertEquals( '1.0.0', MONEDAPAY_VERSION );
+		$this->assertEquals( '1.0.4', MONEDAPAY_VERSION );
 	}
 
 	public function test_plugin_blocks_direct_access(): void {
 		// This test verifies the ABSPATH check works
 		// We can't easily test the exit condition, but we can verify the structure
-		$pluginContent = file_get_contents(dirname(__DIR__).'/moneda-ecommerce-woocommerce.php');
+		$pluginContent = file_get_contents(dirname(__DIR__).'/monedapay-payment-gateway.php');
 
-		$this->assertStringContainsString( 'if ( !defined( \'ABSPATH\' ) )', $pluginContent );
+		$this->assertStringContainsString( "if ( ! defined( 'ABSPATH' ) ) {", $pluginContent );
 		$this->assertStringContainsString( 'exit;', $pluginContent );
 	}
+}
+
 }

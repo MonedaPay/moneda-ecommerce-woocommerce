@@ -39,9 +39,9 @@ class BlocksPaymentMethod extends AbstractPaymentMethodType {
 	/**
 	 * Initialize the payment method
 	 */
-	public function initialize(): void {
+	public function initialize(): void { 
 		$this->settings = get_option( 'woocommerce_monedapay_settings', [] );
-		$wc_gateways    = WC()->payment_gateways();
+		$wc_gateways    = \WC()->payment_gateways();
 		$gateways       = $wc_gateways->payment_gateways();
 		$this->gateway  = $gateways['monedapay'] ?? null;
 	}
@@ -103,7 +103,7 @@ class BlocksPaymentMethod extends AbstractPaymentMethodType {
 			'title'       => $this->get_setting( 'title' ),
 			'description' => $this->get_setting( 'description' ),
 			'supports'    => $this->get_supported_features(),
-			'icon'        => MONEDAPAY_PLUGIN_URL . 'assets/images/monedapay-logo.svg',
+			'icon'        => MONEDAPAY_PLUGIN_URL . 'assets/images/ari-logo-dark.svg',
 		];
 	}
 
