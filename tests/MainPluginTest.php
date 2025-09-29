@@ -69,7 +69,7 @@ class MainPluginTest extends TestCase {
 			$this->test_plugin_constants_are_defined();
 		}
 
-		$this->assertEquals( '1.0.4', MONEDAPAY_VERSION );
+		$this->assertEquals( '1.0.5', MONEDAPAY_VERSION );
 	}
 
 	public function test_plugin_blocks_direct_access(): void {

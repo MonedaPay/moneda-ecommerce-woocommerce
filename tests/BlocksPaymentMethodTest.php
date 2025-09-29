@@ -31,7 +31,7 @@ class BlocksPaymentMethodTest extends TestCase
 			define('MONEDAPAY_PLUGIN_DIR', '/var/www/html/wp-content/plugins/moneda-ecommerce-for-woocommerce/');
 		}
 		if (! defined('MONEDAPAY_VERSION')) {
-			define('MONEDAPAY_VERSION', '1.0.4');
+			define('MONEDAPAY_VERSION', '1.0.5');
 		}
 
 		// Safe defaults (NO closures)

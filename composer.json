@@ -3,7 +3,7 @@
     "description": "Ari10 Pay Payment Gateway for WooCommerce",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
-   "version": "1.0.4",
+   "version": "1.0.5",
     "authors": [
         {
             "name": "MonedaPay Team",

@@ -3,7 +3,7 @@
  * Plugin Name: Ari10 Pay Payment Gateway for WooCommerce
  * Plugin URI: https://monedapay.com
  * Description: Accept payments through Ari10 Pay payment gateway for WooCommerce.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: MonedaPay
  * Author URI: https://monedapay.com
  * Text Domain: moneda-ecommerce-for-woocommerce
