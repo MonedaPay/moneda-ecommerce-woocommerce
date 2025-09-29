@@ -6,7 +6,7 @@
  * Version: 1.0.4
  * Author: MonedaPay
  * Author URI: https://monedapay.com
- * Text Domain: moneda-ecommerce-woocommerce
+ * Text Domain: moneda-ecommerce-for-woocommerce
  * Domain Path: /languages
  * Requires at least: 5.8
  * Requires PHP: 8.2

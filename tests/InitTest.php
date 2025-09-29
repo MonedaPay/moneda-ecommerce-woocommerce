@@ -17,7 +17,7 @@ class InitTest extends TestCase {
 
 		// Mock WordPress constants
 		if ( ! defined( 'MONEDAPAY_PLUGIN_FILE' ) ) {
-			define( 'MONEDAPAY_PLUGIN_FILE', 'moneda-ecommerce-woocommerce/monedapay-payment-gateway.php' );
+			define( 'MONEDAPAY_PLUGIN_FILE', 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		}
 	}
 
@@ -41,7 +41,7 @@ class InitTest extends TestCase {
 		Functions\when( 'apply_filters' )->returnArg( 2 );
 		Functions\when( 'is_multisite' )->justReturn( false );
 		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
-		Functions\when( 'plugin_basename' )->justReturn( 'monedapay-ecommerce-woocommerce/monedapay-payment-gateway.php' );
+		Functions\when( 'plugin_basename' )->justReturn( 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		Functions\when( 'dirname' )->justReturn( 'monedapay' );
 
 		$init = Init::init_class();
@@ -70,7 +70,7 @@ class InitTest extends TestCase {
 		Functions\when( 'is_multisite' )->justReturn( true );
 		Functions\when( 'get_site_option' )->justReturn( [ 'woocommerce/woocommerce.php' => true ] );
 		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
-		Functions\when( 'plugin_basename' )->justReturn( 'monedapay-ecommerce-woocommerce/monedapay-payment-gateway.php' );
+		Functions\when( 'plugin_basename' )->justReturn( 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		Functions\when( 'dirname' )->justReturn( 'monedapay' );
 
 		$init = Init::init_class();
@@ -92,7 +92,7 @@ class InitTest extends TestCase {
 	public function test_woocommerce_missing_notice(): void {
 		Functions\expect( '__' )
 			->once()
-			->with( '%s requires WooCommerce to be installed and active.', 'moneda-ecommerce-woocommerce' )
+			->with( '%s requires WooCommerce to be installed and active.', 'moneda-ecommerce-for-woocommerce' )
 			->andReturn( '%s requires WooCommerce to be installed and active.' );
 
 		Functions\expect( 'wp_kses_post' )->once()->andReturn( 'Safe HTML content' );
@@ -117,7 +117,7 @@ class InitTest extends TestCase {
 			->andReturn(true);
 
 		Functions\expect( 'deactivate_plugins' )->once();
-		Functions\expect( 'plugin_basename' )->once()->andReturn( 'monedapay-ecommerce-woocommerce/monedapay-payment-gateway.php' );
+		Functions\expect( 'plugin_basename' )->once()->andReturn( 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		Functions\expect( 'esc_html__' )->twice()->andReturnUsing(
 			function ( $text ) {
 				return $text;
@@ -152,7 +152,7 @@ class InitTest extends TestCase {
 		
 		Functions\when( 'get_bloginfo' )->justReturn( '5.9' ); // WordPress version is old
 		Functions\expect( 'deactivate_plugins' )->once();
-		Functions\expect( 'plugin_basename' )->once()->andReturn( 'monedapay-ecommerce-woocommerce/monedapay-payment-gateway.php' );
+		Functions\expect( 'plugin_basename' )->once()->andReturn( 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		Functions\expect( 'esc_html__' )->twice()->andReturnUsing(
 			function ( $text ) {
 				return $text;

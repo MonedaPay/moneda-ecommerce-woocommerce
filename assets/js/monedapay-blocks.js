@@ -40,11 +40,11 @@ const MonedaPayComponent = () => {
 // Register the payment method
 registerPaymentMethod({
 	name: 'monedapay',
-	label: settings.title || __('Ari10 Pay', 'moneda-ecommerce-woocommerce'),
+	label: settings.title || __('Ari10 Pay', 'moneda-ecommerce-for-woocommerce'),
 	content: createElement(MonedaPayComponent),
 	edit: createElement(MonedaPayComponent),
 	canMakePayment: () => true,
-	ariaLabel: settings.title || __('Ari10 Pay', 'moneda-ecommerce-woocommerce'),
+	ariaLabel: settings.title || __('Ari10 Pay', 'moneda-ecommerce-for-woocommerce'),
   supports: {
   }
 });

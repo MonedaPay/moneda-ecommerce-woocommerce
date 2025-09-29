@@ -25,10 +25,10 @@ class BlocksPaymentMethodTest extends TestCase
 
 		// Constants
 		if (! defined('MONEDAPAY_PLUGIN_URL')) {
-			define('MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/moneda-ecommerce-woocommerce/');
+			define('MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/moneda-ecommerce-for-woocommerce/');
 		}
 		if (! defined('MONEDAPAY_PLUGIN_DIR')) {
-			define('MONEDAPAY_PLUGIN_DIR', '/var/www/html/wp-content/plugins/moneda-ecommerce-woocommerce/');
+			define('MONEDAPAY_PLUGIN_DIR', '/var/www/html/wp-content/plugins/moneda-ecommerce-for-woocommerce/');
 		}
 		if (! defined('MONEDAPAY_VERSION')) {
 			define('MONEDAPAY_VERSION', '1.0.4');

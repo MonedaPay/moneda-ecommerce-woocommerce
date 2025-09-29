@@ -36,7 +36,7 @@ class GatewayTest extends TestCase {
 		Functions\when( 'add_query_arg' )->alias(function( $args, $url = '' ) {
 			$url = $url ?: 'https://example.com/';
 			$query = http_build_query($args, '', '&');
-			$sep = parse_url($url, PHP_URL_QUERY) ? '&' : '?';
+			$sep = wp_parse_url($url, PHP_URL_QUERY) ? '&' : '?';
 			return $url . ($query ? $sep . $query : '');
 		});
 

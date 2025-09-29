@@ -8,7 +8,7 @@ parameters:
     	- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
     	- stubs/woocommerce-blocks.php
     	- stubs/monedapay-lib.php
-    	- monedapay-payment-gateway.php
+    	- moneda-ecommerce-for-woocommerce.php
     scanDirectories:
        - ./includes
        - ./vendor

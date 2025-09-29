@@ -17,9 +17,9 @@ enum MonedaPayEnvEnum: string {
 	 */
 	public static function getEnvs(): array {
 		return [
-            self::DEVELOPMENT->value => __( 'Development', 'moneda-ecommerce-woocommerce' ),
-			self::SANDBOX->value     => __( 'Staging (Testing)', 'moneda-ecommerce-woocommerce' ),
-			self::PRODUCTION->value  => __( 'Production (Live)', 'moneda-ecommerce-woocommerce' ),
+            self::DEVELOPMENT->value => __( 'Development', 'moneda-ecommerce-for-woocommerce' ),
+			self::SANDBOX->value     => __( 'Staging (Testing)', 'moneda-ecommerce-for-woocommerce' ),
+			self::PRODUCTION->value  => __( 'Production (Live)', 'moneda-ecommerce-for-woocommerce' ),
 		];
 	}
 	public static function mapToApiEnv( ?string $env ): Environment {

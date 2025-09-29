@@ -20,10 +20,10 @@ class IntegrationTest extends TestCase {
 
 		// Mock WordPress constants
 		if ( ! defined( 'MONEDAPAY_PLUGIN_FILE' ) ) {
-			define( 'MONEDAPAY_PLUGIN_FILE', 'moneda-ecommerce-woocommerce/monedapay-payment-gateway.php' );
+			define( 'MONEDAPAY_PLUGIN_FILE', 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		}
 		if ( ! defined( 'MONEDAPAY_PLUGIN_URL' ) ) {
-			define( 'MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/moneda-ecommerce-woocommerce/' );
+			define( 'MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/moneda-ecommerce-for-woocommerce/' );
 		}
 
 		// Mock common WordPress functions
@@ -31,7 +31,7 @@ class IntegrationTest extends TestCase {
 		Functions\when( 'esc_html__' )->returnArg( 1 );
 		Functions\when( 'admin_url' )->justReturn( 'https://example.com/wp-admin/' );
 		Functions\when( 'esc_js' )->returnArg( 1 );
-		Functions\when( 'plugin_basename' )->justReturn( 'monedapay-ecommerce-woocommerce/monedapay-payment-gateway.php' );
+		Functions\when( 'plugin_basename' )->justReturn( 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		Functions\when( 'dirname' )->returnArg( 1 );
 		Functions\when( 'add_action' )->justReturn( true );
 		Functions\when( 'add_filter' )->justReturn( true );

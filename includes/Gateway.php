@@ -62,7 +62,10 @@ class Gateway extends WC_Payment_Gateway {
 	 * @var Client
 	 */
 	private $client;
-	
+
+	/**
+	 * @var array
+	 */
 	public $supports;
 
 	/**
@@ -72,8 +75,8 @@ class Gateway extends WC_Payment_Gateway {
 		$this->id                 = self::GATEWAY_ID;
 		$this->icon               = MONEDAPAY_PLUGIN_URL . 'assets/images/ari-logo-dark.svg';
 		$this->has_fields         = false; // We'll handle payment on our own page.
-		$this->method_title       = __( 'Ari10 Pay', 'moneda-ecommerce-woocommerce' );
-		$this->method_description = __( 'Pay securely with cryptocurrency through Ari10 Pay.', 'moneda-ecommerce-woocommerce' );
+		$this->method_title       = __( 'Ari10 Pay', 'moneda-ecommerce-for-woocommerce' );
+		$this->method_description = __( 'Pay securely with cryptocurrency through Ari10 Pay.', 'moneda-ecommerce-for-woocommerce' );
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -101,39 +104,39 @@ class Gateway extends WC_Payment_Gateway {
 	public function init_form_fields(): void {
 		$this->form_fields = [
 			'enabled'               => [
-				'title'   => __( 'Enable/Disable', 'moneda-ecommerce-woocommerce' ),
+				'title'   => __( 'Enable/Disable', 'moneda-ecommerce-for-woocommerce' ),
 				'type'    => 'checkbox',
-    'label'   => __( 'Enable Ari10 Pay Payment Gateway', 'moneda-ecommerce-woocommerce' ),
+				'label'   => __( 'Enable Ari10 Pay Payment Gateway', 'moneda-ecommerce-for-woocommerce' ),
 				'default' => 'no',
 			],
 			'title'                 => [
-				'title'       => __( 'Title', 'moneda-ecommerce-woocommerce' ),
+				'title'       => __( 'Title', 'moneda-ecommerce-for-woocommerce' ),
 				'type'        => 'text',
-				'description' => __( 'Payment method title that customers will see during checkout.', 'moneda-ecommerce-woocommerce' ),
-				'default'     => __( 'Cryptocurrency Payment', 'moneda-ecommerce-woocommerce' ),
+				'description' => __( 'Payment method title that customers will see during checkout.', 'moneda-ecommerce-for-woocommerce' ),
+				'default'     => __( 'Cryptocurrency Payment', 'moneda-ecommerce-for-woocommerce' ),
 				'desc_tip'    => true,
 			],
 			'description'           => [
-				'title'       => __( 'Description', 'moneda-ecommerce-woocommerce' ),
+				'title'       => __( 'Description', 'moneda-ecommerce-for-woocommerce' ),
 				'type'        => 'textarea',
-				'description' => __( 'Payment method description that customers will see during checkout.', 'moneda-ecommerce-woocommerce' ),
-				'default'     => __( 'Pay securely with cryptocurrency through Ari10 Pay.', 'moneda-ecommerce-woocommerce' ),
+				'description' => __( 'Payment method description that customers will see during checkout.', 'moneda-ecommerce-for-woocommerce' ),
+				'default'     => __( 'Pay securely with cryptocurrency through Ari10 Pay.', 'moneda-ecommerce-for-woocommerce' ),
 				'desc_tip'    => true,
 			],
 			'environment'           => [
-				'title'       => __( 'Environment', 'moneda-ecommerce-woocommerce' ),
+				'title'       => __( 'Environment', 'moneda-ecommerce-for-woocommerce' ),
 				'type'        => 'select',
-				'description' => __( 'Select the Ari10 Pay environment to use.', 'moneda-ecommerce-woocommerce' ),
+				'description' => __( 'Select the Ari10 Pay environment to use.', 'moneda-ecommerce-for-woocommerce' ),
 				'default'     => MonedaPayEnvEnum::SANDBOX->value,
 				'desc_tip'    => true,
 				'options'     => MonedaPayEnvEnum::getEnvs(),
 			],
 			'api_credentials_title' => [
-				'title'       => __( 'Ari10 Pay Configuration', 'moneda-ecommerce-woocommerce' ),
+				'title'       => __( 'Ari10 Pay Configuration', 'moneda-ecommerce-for-woocommerce' ),
 				'type'        => 'title',
 				'description' => sprintf(
 					/* translators: %s: Environment name */
-     __( 'Enter your Ari10 Pay merchant configuration for the %s environment.', 'moneda-ecommerce-woocommerce' ),
+					__( 'Enter your Ari10 Pay merchant configuration for the %s environment.', 'moneda-ecommerce-for-woocommerce' ),
 					'<strong id="monedapay-environment-label">' . $this->get_option(
 						'environment',
 						MonedaPayEnvEnum::SANDBOX->value
@@ -142,39 +145,39 @@ class Gateway extends WC_Payment_Gateway {
 				),
 			],
 			'merchant_id'           => [
-				'title'       => __( 'Merchant ID', 'moneda-ecommerce-woocommerce' ),
+				'title'       => __( 'Merchant ID', 'moneda-ecommerce-for-woocommerce' ),
 				'type'        => 'text',
-    'description' => __( 'Your Ari10 Pay Merchant ID (UUID format). Get this from your Ari10 Pay account dashboard.', 'moneda-ecommerce-woocommerce' ),
+				'description' => __( 'Your Ari10 Pay Merchant ID (UUID format). Get this from your Ari10 Pay account dashboard.', 'moneda-ecommerce-for-woocommerce' ),
 				'default'     => '',
 				'desc_tip'    => true,
 				'placeholder' => 'e.g., 550e8400-e29b-41d4-a716-446655440000',
 			],
 			'shop_id'               => [
-				'title'       => __( 'Shop ID', 'moneda-ecommerce-woocommerce' ),
+				'title'       => __( 'Shop ID', 'moneda-ecommerce-for-woocommerce' ),
 				'type'        => 'text',
-    'description' => __( 'Your Ari10 Pay Shop ID (UUID format). Get this from your Ari10 Pay account dashboard.', 'moneda-ecommerce-woocommerce' ),
+				'description' => __( 'Your Ari10 Pay Shop ID (UUID format). Get this from your Ari10 Pay account dashboard.', 'moneda-ecommerce-for-woocommerce' ),
 				'default'     => '',
 				'desc_tip'    => true,
 				'placeholder' => 'e.g., 6ba7b810-9dad-11d1-80b4-00c04fd430c8',
 			],
 			'encryption_key'        => [
-				'title'       => __( 'Encryption Key', 'moneda-ecommerce-woocommerce' ),
+				'title'       => __( 'Encryption Key', 'moneda-ecommerce-for-woocommerce' ),
 				'type'        => 'password',
-    'description' => __( 'Your Ari10 Pay Encryption Key. Keep this secure and never share it.', 'moneda-ecommerce-woocommerce' ),
+				'description' => __( 'Your Ari10 Pay Encryption Key. Keep this secure and never share it.', 'moneda-ecommerce-for-woocommerce' ),
 				'default'     => '',
 				'desc_tip'    => true,
 				'placeholder' => 'e.g., GsTvagiquFzVXZAtrBmfORWM',
 			],
 			'debug'                 => [
-				'title'       => __( 'Debug Log', 'moneda-ecommerce-woocommerce' ),
+				'title'       => __( 'Debug Log', 'moneda-ecommerce-for-woocommerce' ),
 				'type'        => 'checkbox',
-				'label'       => __( 'Enable logging', 'moneda-ecommerce-woocommerce' ),
+				'label'       => __( 'Enable logging', 'moneda-ecommerce-for-woocommerce' ),
 				'default'     => 'no',
 				'description' => sprintf(
 					/* translators: %1$s: Log file location, %2$s: WooCommerce logs URL */
-     __( 'Log Ari10 Pay events inside %1$s. You can view logs in %2$s.', 'moneda-ecommerce-woocommerce' ),
+					__( 'Log Ari10 Pay events inside %1$s. You can view logs in %2$s.', 'moneda-ecommerce-for-woocommerce' ),
 					sprintf( '<code>%s</code>', Settings::get_log_directory() ), // @phpstan-ignore-line
-					'<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '" target="_blank">' . __( 'WooCommerce > Status > Logs', 'moneda-ecommerce-woocommerce' ) . '</a>'
+					'<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '" target="_blank">' . __( 'WooCommerce > Status > Logs', 'moneda-ecommerce-for-woocommerce' ) . '</a>'
 				),
 			],
 		];
@@ -230,7 +233,7 @@ class Gateway extends WC_Payment_Gateway {
 		if ( ! $order instanceof \WC_Order ) {
 			return [
 				'result'  => 'fail',
-				'message' => __( 'Order not found.', 'moneda-ecommerce-woocommerce' ),
+				'message' => __( 'Order not found.', 'moneda-ecommerce-for-woocommerce' ),
 			];
 		}
 
@@ -240,12 +243,12 @@ class Gateway extends WC_Payment_Gateway {
 		if ( empty( $link ) ) {
 			return [
 				'result'  => 'fail',
-				'message' => __( 'Could not generate payment link. Please try again or contact support.', 'moneda-ecommerce-woocommerce' ),
+				'message' => __( 'Could not generate payment link. Please try again or contact support.', 'moneda-ecommerce-for-woocommerce' ),
 			];
 		}
 
 		// Mark as pending (we're awaiting the payment).
-		$order->update_status( 'pending', __( 'Awaiting Ari10 Pay payment', 'moneda-ecommerce-woocommerce' ) );
+		$order->update_status( 'pending', __( 'Awaiting Ari10 Pay payment', 'moneda-ecommerce-for-woocommerce' ) );
 
 		// Return redirect URL (use WooCommerce return URL). The link is created for side effects.
 		return [
@@ -305,28 +308,27 @@ class Gateway extends WC_Payment_Gateway {
 			$encryption_key = isset( $post_data[ 'woocommerce_' . $this->id . '_encryption_key' ] ) ? sanitize_text_field( $post_data[ 'woocommerce_' . $this->id . '_encryption_key' ] ) : '';
 
 			if ( empty( $merchant_id ) ) {
-				$errors[] = __( 'Merchant ID is required when the gateway is enabled.', 'moneda-ecommerce-woocommerce' );
+				$errors[] = __( 'Merchant ID is required when the gateway is enabled.', 'moneda-ecommerce-for-woocommerce' );
 			} elseif ( ! $this->is_valid_uuid( $merchant_id ) ) {
-				$errors[] = __( 'Merchant ID must be a valid UUID format.', 'moneda-ecommerce-woocommerce' );
+				$errors[] = __( 'Merchant ID must be a valid UUID format.', 'moneda-ecommerce-for-woocommerce' );
 			}
 
 			if ( empty( $shop_id ) ) {
-				$errors[] = __( 'Shop ID is required when the gateway is enabled.', 'moneda-ecommerce-woocommerce' );
+				$errors[] = __( 'Shop ID is required when the gateway is enabled.', 'moneda-ecommerce-for-woocommerce' );
 			} elseif ( ! $this->is_valid_uuid( $shop_id ) ) {
-				$errors[] = __( 'Shop ID must be a valid UUID format.', 'moneda-ecommerce-woocommerce' );
+				$errors[] = __( 'Shop ID must be a valid UUID format.', 'moneda-ecommerce-for-woocommerce' );
 			}
 
 			if ( empty( $encryption_key ) ) {
-				$errors[] = __( 'Encryption Key is required when the gateway is enabled.', 'moneda-ecommerce-woocommerce' );
+				$errors[] = __( 'Encryption Key is required when the gateway is enabled.', 'moneda-ecommerce-for-woocommerce' );
 			} elseif ( ! $this->is_valid_encryption_key( $encryption_key ) ) {
-				$errors[] = __( 'Encryption Key must be 24 characters long and contain only alphanumeric characters.', 'moneda-ecommerce-woocommerce' );
+				$errors[] = __( 'Encryption Key must be 24 characters long and contain only alphanumeric characters.', 'moneda-ecommerce-for-woocommerce' );
 			}
 		}
 
 		foreach ( $errors as $error ) {
 			\WC_Admin_Settings::add_error( $error );
 		}
-		
 
 		return empty( $errors );
 	}
@@ -358,13 +360,13 @@ class Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	private function create_client(): void {
-		// Fetch latest options with safe defaults to avoid nulls in tests/mocks
-		$environment    = (string) ( $this->get_option( 'environment', MonedaPayEnvEnum::SANDBOX->value ) ?: MonedaPayEnvEnum::SANDBOX->value );
-		$api_key        = '';
-		$api_secret     = (string) ( $this->get_option( 'encryption_key', '' ) ?: '' );
-		$base_url       = home_url();
-		$merchant_id    = (string) ( $this->get_option( 'merchant_id', '' ) ?: '' );
-		$shop_id        = (string) ( $this->get_option( 'shop_id', '' ) ?: '' );
+		// Fetch latest options with safe defaults to avoid nulls in tests/mocks.
+		$environment = (string) ( $this->get_option( 'environment', MonedaPayEnvEnum::SANDBOX->value ) ?: MonedaPayEnvEnum::SANDBOX->value );
+		$api_key     = '';
+		$api_secret  = (string) ( $this->get_option( 'encryption_key', '' ) ?: '' );
+		$base_url    = home_url();
+		$merchant_id = (string) ( $this->get_option( 'merchant_id', '' ) ?: '' );
+		$shop_id     = (string) ( $this->get_option( 'shop_id', '' ) ?: '' );
 
 		$config = new Config(
 			$environment,
@@ -451,7 +453,7 @@ class Gateway extends WC_Payment_Gateway {
 		CreatePaymentRequestInterface &$request
 	): void {
 		// Generate callback URL for webhook notifications using REST API.
-        $callback_url = $order->get_checkout_order_received_url();
+		$callback_url = $order->get_checkout_order_received_url();
 
 		// Generate cancel URL for user cancellations.
 		$cancel_url = $order->get_cancel_order_url();

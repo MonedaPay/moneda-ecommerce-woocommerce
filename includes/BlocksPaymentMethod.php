@@ -39,7 +39,7 @@ class BlocksPaymentMethod extends AbstractPaymentMethodType {
 	/**
 	 * Initialize the payment method
 	 */
-	public function initialize(): void { 
+	public function initialize(): void {
 		$this->settings = get_option( 'woocommerce_monedapay_settings', [] );
 		$wc_gateways    = \WC()->payment_gateways();
 		$gateways       = $wc_gateways->payment_gateways();

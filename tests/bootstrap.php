@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Define plugin constants
 if ( ! defined( 'MONEDAPAY_PLUGIN_FILE' ) ) {
-	define( 'MONEDAPAY_PLUGIN_FILE', dirname( __DIR__ ) . '/moneda-ecommerce-woocommerce.php' );
+	define( 'MONEDAPAY_PLUGIN_FILE', dirname( __DIR__ ) . '/moneda-ecommerce-for-woocommerce.php' );
 }
 
 if ( ! defined( 'MONEDAPAY_PLUGIN_DIR' ) ) {
@@ -23,7 +23,7 @@ if ( ! defined( 'MONEDAPAY_PLUGIN_DIR' ) ) {
 
 // Ensure correct plugin URL constant (matches actual plugin directory name)
 if ( ! defined( 'MONEDAPAY_PLUGIN_URL' ) ) {
-	define( 'MONEDAPAY_PLUGIN_URL', 'http://example.com/wp-content/plugins/moneda-ecommerce-woocommerce/' );
+	define( 'MONEDAPAY_PLUGIN_URL', 'http://example.com/wp-content/plugins/moneda-ecommerce-for-woocommerce/' );
 }
 
 if ( ! defined( 'MONEDAPAY_VERSION' ) ) {

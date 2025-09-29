@@ -16,10 +16,10 @@ class MultisiteTest extends TestCase {
 
 		// Mock WordPress constants
 		if ( ! defined( 'MONEDAPAY_PLUGIN_FILE' ) ) {
-			define( 'MONEDAPAY_PLUGIN_FILE', 'monedapay-ecommerce-woocommerce/monedapay-payment-gateway.php' );
+			define( 'MONEDAPAY_PLUGIN_FILE', 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		}
 		if ( ! defined( 'MONEDAPAY_PLUGIN_URL' ) ) {
-			define( 'MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/monedapay-ecommerce-woocommerce/' );
+			define( 'MONEDAPAY_PLUGIN_URL', 'https://example.com/wp-content/plugins/monedapay-ecommerce-for-woocommerce/' );
 		}
 	}
 
