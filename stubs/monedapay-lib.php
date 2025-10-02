@@ -16,7 +16,7 @@ namespace MonedaPay\MonedaPayLib\Service {
 			return new Encryption(); }
 
 		public function createPaymentLink( $request ): string {
-			return ''; }
+			return 'payment-link'; }
 
 		public function createOrderInfoRequest( &$responseObject ) {
 			return $responseObject; }

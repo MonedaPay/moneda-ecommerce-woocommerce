@@ -17,7 +17,7 @@ class InitTest extends TestCase {
 
 		// Mock WordPress constants
 		if ( ! defined( 'MONEDAPAY_PLUGIN_FILE' ) ) {
-			define( 'MONEDAPAY_PLUGIN_FILE', '/path/to/plugin.php' );
+			define( 'MONEDAPAY_PLUGIN_FILE', 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		}
 	}
 
@@ -41,7 +41,7 @@ class InitTest extends TestCase {
 		Functions\when( 'apply_filters' )->returnArg( 2 );
 		Functions\when( 'is_multisite' )->justReturn( false );
 		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
-		Functions\when( 'plugin_basename' )->justReturn( 'monedapay/plugin.php' );
+		Functions\when( 'plugin_basename' )->justReturn( 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		Functions\when( 'dirname' )->justReturn( 'monedapay' );
 
 		$init = Init::init_class();
@@ -70,7 +70,7 @@ class InitTest extends TestCase {
 		Functions\when( 'is_multisite' )->justReturn( true );
 		Functions\when( 'get_site_option' )->justReturn( [ 'woocommerce/woocommerce.php' => true ] );
 		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
-		Functions\when( 'plugin_basename' )->justReturn( 'monedapay/plugin.php' );
+		Functions\when( 'plugin_basename' )->justReturn( 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		Functions\when( 'dirname' )->justReturn( 'monedapay' );
 
 		$init = Init::init_class();
@@ -92,7 +92,7 @@ class InitTest extends TestCase {
 	public function test_woocommerce_missing_notice(): void {
 		Functions\expect( '__' )
 			->once()
-			->with( '%s requires WooCommerce to be installed and active.', 'monedapay-payment-gateway' )
+			->with( '%s requires WooCommerce to be installed and active.', 'moneda-ecommerce-for-woocommerce' )
 			->andReturn( '%s requires WooCommerce to be installed and active.' );
 
 		Functions\expect( 'wp_kses_post' )->once()->andReturn( 'Safe HTML content' );
@@ -108,16 +108,16 @@ class InitTest extends TestCase {
 	}
 
 	public function test_activate_with_insufficient_php_version(): void {
-		// Mock PHP version check to fail, WordPress version check not reached
-		Functions\when( 'version_compare' )->alias( function( $version1, $version2, $operator ) {
-			// Only the PHP version check should fail
-			if ( $version2 === '7.2.5' && $operator === '<' ) {
-				return true; // PHP version is insufficient - triggers deactivation
-			}
-			return false; // Other version checks should pass
-		});
+		$vc = 'version_compare';
+
+		/* Exception: the PHP min-version check should be TRUE */
+		Functions\expect($vc)
+			->atLeast()->once()
+			->with(Mockery::type('string'), '7.2.5', '<') // first arg can be PHP_VERSION or phpversion()
+			->andReturn(true);
+
 		Functions\expect( 'deactivate_plugins' )->once();
-		Functions\expect( 'plugin_basename' )->once()->andReturn( 'monedapay/plugin.php' );
+		Functions\expect( 'plugin_basename' )->once()->andReturn( 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		Functions\expect( 'esc_html__' )->twice()->andReturnUsing(
 			function ( $text ) {
 				return $text;
@@ -135,21 +135,24 @@ class InitTest extends TestCase {
 	}
 
 	public function test_activate_with_insufficient_wordpress_version(): void {
-		// Mock PHP version check to pass, WordPress version to fail
-		Functions\when( 'version_compare' )->alias( function( $version1, $version2, $operator ) {
-			// PHP version check should pass
-			if ( $version2 === '7.2.5' && $operator === '<' ) {
-				return false; // PHP version is sufficient
-			}
-			// WordPress version check should fail
-			if ( $version1 === '5.9' && $version2 === '6.0' && $operator === '<' ) {
-				return true; // WordPress version is insufficient
-			}
-			return false;
-		});
+		// Default: any other version_compare() call returns false
+		$vc = 'version_compare';
+
+// PHP version check: "< 7.2.5" should be FALSE (i.e., PHP is sufficient)
+		Functions\expect($vc)
+			->atLeast()->once()
+			->with(Mockery::type('string'), '7.2.5', '<')
+			->andReturn(false);
+
+// WordPress version check: "5.9 < 6.0" should be TRUE (i.e., WP is insufficient)
+		Functions\expect($vc)
+			->atLeast()->once()
+			->with('5.9', '6.0', '<')
+			->andReturn(true);
+		
 		Functions\when( 'get_bloginfo' )->justReturn( '5.9' ); // WordPress version is old
 		Functions\expect( 'deactivate_plugins' )->once();
-		Functions\expect( 'plugin_basename' )->once()->andReturn( 'monedapay/plugin.php' );
+		Functions\expect( 'plugin_basename' )->once()->andReturn( 'moneda-ecommerce-for-woocommerce/moneda-ecommerce-for-woocommerce.php' );
 		Functions\expect( 'esc_html__' )->twice()->andReturnUsing(
 			function ( $text ) {
 				return $text;

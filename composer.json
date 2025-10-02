@@ -1,9 +1,9 @@
 {
-    "name": "monedapay/moneda-ecommerce-woocommerce",
+    "name": "monedapay/moneda-ecommerce-for-woocommerce",
     "description": "Ari10 Pay Payment Gateway for WooCommerce",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
-   "version": "1.0.4",
+   "version": "1.0.5",
     "authors": [
         {
             "name": "MonedaPay",
@@ -43,7 +43,9 @@
     "config": {
         "optimize-autoloader": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/installers": true,
+            "automattic/jetpack-autoloader": true
         }
     },
     "minimum-stability": "dev",
